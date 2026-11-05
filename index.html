@@ -247,15 +247,17 @@ function monster(){
 function burst(pos,color,n=18){for(let i=0;i<n;i++){let o=new THREE.Mesh(new THREE.SphereGeometry(.045,6,6),new THREE.MeshBasicMaterial({color,transparent:true}));o.position.copy(pos);o.userData.v=new THREE.Vector3((Math.random()-.5)*3,Math.random()*2.5,(Math.random()-.5)*2);o.userData.life=.45+Math.random()*.35;scene.add(o);particles.push(o)}}
 function init(){
  try{
-  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.setSize(stage.clientWidth,stage.clientHeight,false);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;stage.appendChild(renderer.domElement);
-  scene=new THREE.Scene();scene.fog=new THREE.Fog(0x15243a,8,18);camera=new THREE.PerspectiveCamera(35,stage.clientWidth/stage.clientHeight,.1,60);camera.position.set(0,3.2,9);camera.lookAt(0,.9,0);clock=new THREE.Clock();
+  renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));const initialW=stage.clientWidth||900,initialH=stage.clientHeight||300;renderer.setSize(initialW,initialH,false);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;stage.appendChild(renderer.domElement);
+  scene=new THREE.Scene();scene.fog=new THREE.Fog(0x15243a,8,18);camera=new THREE.PerspectiveCamera(35,initialW/initialH,.1,60);camera.position.set(0,3.2,9);camera.lookAt(0,.9,0);clock=new THREE.Clock();
   scene.add(new THREE.HemisphereLight(0xbad8ff,0x273047,2));let key=new THREE.DirectionalLight(0xffe4bf,3);key.position.set(-3,7,5);key.castShadow=true;scene.add(key);let rim=new THREE.PointLight(0x479fff,20,10);rim.position.set(3,3,-2);scene.add(rim);
   add(scene,new THREE.CylinderGeometry(5.5,6,.28,48),M(0x26394f,.5,.6),[0,-.18,0]);add(scene,new THREE.CylinderGeometry(4.3,4.3,.03,48),M(0x3b5068,.25,.7),[0,-.02,0]);let ring=add(scene,new THREE.TorusGeometry(3.1,.025,8,64),M(0x7893ae,.6,.3,0x29496b),[0,.02,0]);ring.rotation.x=Math.PI/2;
   for(let i=0;i<12;i++){let a=i/12*Math.PI*2,r=4.5;let rock=add(scene,new THREE.DodecahedronGeometry(.25+Math.random()*.18),M(i%2?0x34465e:0x4b5266,.3,.8),[Math.cos(a)*r,.3,Math.sin(a)*r]);rock.rotation.set(Math.random(),Math.random(),Math.random())}
   hero=humanoid();hero.position.set(-2,0,.1);foe=monster();foe.position.set(2,0,-.1);scene.add(hero,foe);arena.classList.add('three-ready');status.textContent='3D ENGINE · ONLINE';window.sync3DStage({zone:0,classId:null,enemyName:'森林哥布林'});animate();window.addEventListener('resize',resize);
  }catch(e){status.textContent='3D 載入失敗';console.error(e)}
 }
-function resize(){if(!renderer)return;let w=stage.clientWidth,h=stage.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+function resize(){if(!renderer||!camera)return;let w=stage.clientWidth,h=stage.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+// The battle tab is initially display:none; resize again as soon as it becomes visible.\nif('ResizeObserver' in window){const stageObserver=new ResizeObserver(()=>resize());stageObserver.observe(stage)}
+window.addEventListener('load',()=>requestAnimationFrame(resize));
 function sync(d){last=d||last;if(!scene||!d)return;let colors=[0x5a8b75,0x8b7659,0x82b7d8,0x797b9d,0xc96d36,0x6e3e80,0x9b5cbd];scene.fog.color.setHex(colors[d.zone]||0x15243a);
  if(d.classId&&hero.userData.kind!==d.classId){scene.remove(hero);hero=humanoid(d.classId);hero.userData.kind=d.classId;hero.position.set(-2,0,.1);scene.add(hero)}
  if(d.enemyName&&foe.userData.name!==d.enemyName){scene.remove(foe);foe=monster();foe.userData.name=d.enemyName;foe.position.set(2,0,-.1);scene.add(foe)}
