@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#090d16"><title>SHADOW QUEST｜暗影遠征 V1.2</title>
+<meta name="theme-color" content="#090d16"><title>SHADOW QUEST｜暗影遠征 V1.3</title>
 <style>
 :root{--bg:#090d16;--panel:#121a29;--panel2:#182338;--line:#293852;--gold:#e8bd69;--muted:#9ba9bd;--text:#eef3fb;--cyan:#79d9e8;--red:#f07878;--green:#79d6a2}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#243453 0,#0b1220 42%,#070b12 100%);color:var(--text);font:14px/1.45 system-ui,-apple-system,"Noto Sans TC",sans-serif;min-height:100vh}
@@ -71,7 +71,7 @@ button:hover{filter:brightness(1.16);box-shadow:0 4px 16px #0005}
 <header><div class="brand">SHADOW QUEST<small>暗影遠征 · CHRONICLES OF THE ABYSS</small></div><div class="resources"><button class="small" id="soundToggle" onclick="toggleSound()">🔊 音效開</button><div class="resource">🪙 <b id="gold">0</b></div><div class="resource">💎 <b id="gems">0</b></div><div class="resource">🔷 <b id="shards">0</b></div></div></header>
 <main>
 <aside><div class="profile"><div class="avatar" id="sideAvatar">⚔️</div><div><b id="sideName">無名旅人</b><div class="muted" id="sideLevel">Lv.1 新手</div></div></div><nav class="nav" id="nav">
-<button class="active" data-page="home"><span>🏰</span>冒險大廳</button><button data-page="battle"><span>⚔️</span>戰鬥探索</button><button data-page="character"><span>🧙</span>角色資訊</button><button data-page="inventory"><span>🎒</span>裝備背包</button><button data-page="skills"><span>✨</span>技能天賦</button><button data-page="pets"><span>🐺</span>寵物坐騎</button><button data-page="dungeon"><span>🗝️</span>副本挑戰</button><button data-page="forge"><span>⚒️</span>鐵匠工坊</button><button data-page="achievements"><span>🏆</span>成就紀錄</button><button data-page="settings"><span>⚙️</span>設定存檔</button></nav></aside>
+<button class="active" data-page="home"><span>🏰</span>冒險大廳</button><button data-page="battle"><span>⚔️</span>戰鬥探索</button><button data-page="character"><span>🧙</span>角色資訊</button><button data-page="inventory"><span>🎒</span>裝備背包</button><button data-page="skills"><span>✨</span>技能天賦</button><button data-page="pets"><span>🐺</span>寵物坐騎</button><button data-page="dungeon"><span>🗝️</span>副本挑戰</button><button data-page="forge"><span>⚒️</span>鐵匠工坊</button><button data-page="achievements"><span>🏆</span>成就紀錄</button><button data-page="settings"><span>⚙️</span>設定存檔</button><button data-page="expedition"><span>🌌</span>遠征系統</button></nav></aside>
 <section class="content">
 <div class="page active" id="page-home">
 <div class="panel hero"><div class="hero-inner"><div class="eyebrow">THE ABYSS IS CALLING</div><h1>黑暗正在甦醒，<br>傳奇由你書寫。</h1><p>踏入失落王國，狩獵深淵魔物，收集遠古力量。你的遠征，現在開始。</p><button class="primary" onclick="go('battle')">開始冒險　➜</button></div><div class="hero-art" id="heroArt">🛡️</div></div>
@@ -88,7 +88,82 @@ button:hover{filter:brightness(1.16);box-shadow:0 4px 16px #0005}
 <div class="page" id="page-dungeon"><div class="panel"><h2 class="section-title">🗝️ 副本挑戰</h2><p class="muted">每日副本次數有限，Boss 關卡可重複挑戰。</p><div class="item-grid" id="dungeons"></div></div></div>
 <div class="page" id="page-forge"><div class="panel"><h2 class="section-title">⚒️ 鐵匠工坊</h2><div class="grid two"><div class="card"><h3>裝備強化</h3><p class="muted">強化目前裝備，提升基礎屬性。</p><div id="forgeTarget" class="item"></div><p id="forgeCost" class="gold"></p><button class="primary" onclick="upgradeGear()">強化裝備</button></div><div class="card"><h3>神秘補給</h3><p class="muted">使用鑽石取得隨機裝備。十連抽至少獲得一件史詩或以上裝備。</p><button onclick="draw(1)">單次尋寶　💎 50</button> <button class="primary" onclick="draw(10)">十連尋寶　💎 450</button></div></div><div class="notice" style="margin-top:12px">抽取機率：普通 45%、優良 28%、稀有 17%、史詩 7%、傳說 2.5%、神話 0.5%。十連抽保底史詩以上。所有抽取均使用遊戲內可取得的鑽石。</div></div></div>
 <div class="page" id="page-achievements"><div class="panel"><h2 class="section-title">🏆 成就紀錄</h2><div id="achievementList" class="item-grid"></div></div></div>
-<div class="page" id="page-settings"><div class="panel"><h2 class="section-title">⚙️ 設定與存檔</h2><div class="card"><b>遊戲進度</b><p class="muted">進度自動儲存在目前瀏覽器。清除瀏覽器資料前請先匯出備份。</p><div class="battle-actions"><button class="good" onclick="exportSave()">匯出存檔</button><button onclick="document.getElementById('importFile').click()">匯入存檔</button><input id="importFile" type="file" accept=".json" hidden onchange="importSave(event)"><button class="danger" onclick="resetGame()">重置遊戲</button></div></div><div class="card" style="margin-top:12px"><b>遊戲版本</b><p class="muted">Shadow Quest · Web Edition 1.2.0 · Three.js 3D Battle<br>離線單機版｜手機與桌面瀏覽器支援</p></div></div></div>
+<div class="page" id="page-settings"><div class="panel"><h2 class="section-title">⚙️ 設定與存檔</h2><div class="card"><b>遊戲進度</b><p class="muted">進度自動儲存在目前瀏覽器。清除瀏覽器資料前請先匯出備份。</p><div class="battle-actions"><button class="good" onclick="exportSave()">匯出存檔</button><button onclick="document.getElementById('importFile').click()">匯入存檔</button><input id="importFile" type="file" accept=".json" hidden onchange="importSave(event)"><button class="danger" onclick="resetGame()">重置遊戲</button></div></div><div class="card" style="margin-top:12px"><b>遊戲版本</b><p class="muted">Shadow Quest · Web Edition 1.3.0 · Expedition Update<br>離線單機版｜手機與桌面瀏覽器支援</p></div></div></div>
+
+<div class="page" id="page-expedition">
+ <div class="panel">
+  <h2 class="section-title">🌌 遠征系統 <span class="tag">V1.3 · 永久養成</span></h2>
+  <p class="muted">新增世界 Boss、無盡深淵、每日委託、競技試煉、公會、裝備鑲嵌、寵物進化與轉生。此版本先以本機單機模擬運作，資料沿用原本存檔。</p>
+ </div>
+ <div class="grid two">
+  <div class="panel">
+   <h3 class="section-title">🐉 世界 Boss <span class="tag" id="sqBossTimer">每日挑戰</span></h3>
+   <div class="item">
+    <div class="itemicon" style="font-size:36px">🐲</div>
+    <div><b id="sqBossName">深淵古龍</b><div class="muted" id="sqBossDesc">限時強敵，擊敗可取得稀有獎勵</div></div>
+   </div>
+   <div class="statline" style="margin:10px 0"><div class="stat"><b id="sqBossHp">--</b><small>Boss 生命</small></div><div class="stat"><b id="sqBossBest">0</b><small>累計討伐</small></div></div>
+   <button class="primary" onclick="sqFightBoss()">⚔️ 挑戰世界 Boss</button>
+  </div>
+  <div class="panel">
+   <h3 class="section-title">🕳️ 無盡深淵 <span class="tag">無限層數</span></h3>
+   <div class="item"><div class="itemicon">🗼</div><div><b>深淵第 <span id="sqAbyssFloor">1</span> 層</b><div class="muted">每 10 層出現守關 Boss，越深獎勵越高</div></div></div>
+   <div class="statline" style="margin:10px 0"><div class="stat"><b id="sqAbyssBest">1</b><small>最高紀錄</small></div><div class="stat"><b id="sqAbyssReward">--</b><small>本層獎勵</small></div></div>
+   <button class="primary" onclick="sqRunAbyss()">深入一層</button>
+  </div>
+ </div>
+ <div class="grid two">
+  <div class="panel">
+   <h3 class="section-title">📜 每日委託</h3>
+   <div id="sqDailyList" class="grid"></div>
+   <button onclick="sqClaimDaily()" class="good" style="margin-top:10px">領取已完成委託</button>
+  </div>
+  <div class="panel">
+   <h3 class="section-title">🏟️ 競技試煉</h3>
+   <p class="muted">與不同戰力的冒險者影像進行單人模擬對戰，累積競技積分。</p>
+   <div class="statline"><div class="stat"><b id="sqArenaScore">0</b><small>競技積分</small></div><div class="stat"><b id="sqArenaRank">見習者</b><small>目前段位</small></div></div>
+   <button class="primary" onclick="sqArenaFight()" style="margin-top:10px">開始競技</button>
+  </div>
+ </div>
+ <div class="grid two">
+  <div class="panel">
+   <h3 class="section-title">🏰 冒險者公會</h3>
+   <div class="item"><div class="itemicon">🏰</div><div><b id="sqGuildName">遠征者公會</b><div class="muted">公會等級 <span id="sqGuildLevel">1</span> · 貢獻 <span id="sqGuildXP">0</span></div></div></div>
+   <p class="muted">完成公會委託累積貢獻，提升公會等級並取得被動加成。</p>
+   <button onclick="sqGuildQuest()">完成公會委託</button>
+  </div>
+  <div class="panel">
+   <h3 class="section-title">💎 裝備鑲嵌</h3>
+   <p class="muted">為目前穿戴裝備鑲嵌符文，提升攻擊、防禦或生命。每件裝備最多 3 個符文槽。</p>
+   <div id="sqSocketList" class="grid"></div>
+   <button onclick="sqSocketGear()" class="primary" style="margin-top:10px">鑲嵌隨機符文</button>
+  </div>
+ </div>
+ <div class="grid two">
+  <div class="panel">
+   <h3 class="section-title">🐾 寵物進化</h3>
+   <div id="sqPetEvolution"></div>
+   <button onclick="sqEvolvePet()" class="primary" style="margin-top:10px">進化目前出戰寵物</button>
+  </div>
+  <div class="panel">
+   <h3 class="section-title">♻️ 英雄轉生</h3>
+   <div class="item"><div class="itemicon">✨</div><div><b>轉生階級 <span id="sqRebirth">0</span></b><div class="muted">Lv.150 解鎖，永久增加基礎屬性</div></div></div>
+   <p class="muted">轉生會重置等級與區域進度，但保留裝備、寵物、公會、鑽石及轉生加成。請先確認再執行。</p>
+   <button onclick="sqRebirthNow()" class="danger">達成條件後轉生</button>
+  </div>
+ </div>
+ <div class="panel">
+  <h3 class="section-title">🛒 遠征補給商店</h3>
+  <p class="muted">使用遊戲內金幣購買強化素材；不涉及真實貨幣交易。</p>
+  <div class="battle-actions">
+   <button onclick="sqBuy('rune')">購買符文碎片 · 500 金幣</button>
+   <button onclick="sqBuy('potion')">購買生命藥水 · 300 金幣</button>
+   <button onclick="sqBuy('ticket')">購買深淵通行證 · 800 金幣</button>
+  </div>
+  <div class="muted" id="sqSupplyInventory" style="margin-top:8px"></div>
+ </div>
+</div>
+
 </section></main><footer>SHADOW QUEST · 讓每一次遠征，都成為傳奇。</footer>
 <div class="modalback" id="modal"><div class="modal" id="modalBody"></div></div>
 <script>
@@ -220,6 +295,134 @@ const sqOldRunDungeon=runDungeon;
 runDungeon=function(id){audioReady();sfx('skill');sqOldRunDungeon(id)}
 document.addEventListener('click',e=>{if(e.target.closest('button')){audioReady();if(sqSoundOn)sfx('click')}});
 
+
+// ===== SHADOW QUEST V1.3: EXPEDITION & LONG-TERM PROGRESSION =====
+// All new fields are additive; the original localStorage save and game systems remain compatible.
+(function(){
+ const defaults={bossKillsV13:0,bossDay:'',abyssFloor:1,abyssBest:1,arenaScore:0,guildLevel:1,guildXP:0,runes:0,potions:0,abyssTickets:0,rebirth:0,petEvolution:{},dailyDate:'',dailyClaims:[],dailyProgress:{kills:0,skills:0,gear:0}};
+ function initV13(){state.v13=Object.assign({},defaults,state.v13||{});state.v13.dailyProgress=Object.assign({},defaults.dailyProgress,state.v13.dailyProgress||{});if(!state.v13.petEvolution)state.v13.petEvolution={};}
+ initV13();
+ const v=()=>state.v13, today=()=>new Date().toLocaleDateString('en-CA');
+ if(v().dailyDate!==today()){v().dailyDate=today();v().dailyClaims=[];v().dailyProgress={kills:0,skills:0,gear:0};}
+ const nfmt=n=>Math.floor(n).toLocaleString('zh-TW');
+ function persist(){try{save()}catch(e){console.warn('V1.3 save failed',e)}}
+ function notify(t,m=''){if(typeof toast==='function')toast(t,m);else log(t+' '+m)}
+ function rank(score){return score>=2500?'傳奇鬥士':score>=1500?'大師':score>=800?'鑽石':score>=350?'黃金':score>=100?'白銀':'見習者'}
+ function renderV13(){
+  if(!document.getElementById('sqBossName'))return;
+  const day=today(),z=zones[state.zone],bossLv=Math.max(1,state.level),bossHp=Math.floor((z.hp*18+bossLv*250)*Math.pow(1.12,v().bossKillsV13%8));
+  $('sqBossName').textContent=['深淵古龍','墮星巨像','永夜魔君'][v().bossKillsV13%3];
+  $('sqBossDesc').textContent='推薦 Lv.'+Math.max(z.level,bossLv)+' · 擊敗可取得大量資源與高階裝備';
+  $('sqBossHp').textContent=nfmt(bossHp);$('sqBossBest').textContent=v().bossKillsV13;
+  $('sqBossTimer').textContent=v().bossDay===day?'今日已討伐':'每日可挑戰一次';
+  $('sqAbyssFloor').textContent=v().abyssFloor;$('sqAbyssBest').textContent=v().abyssBest;
+  $('sqAbyssReward').textContent=nfmt(v().abyssFloor*35)+' 金幣';
+  $('sqArenaScore').textContent=nfmt(v().arenaScore);$('sqArenaRank').textContent=rank(v().arenaScore);
+  $('sqGuildLevel').textContent=v().guildLevel;$('sqGuildXP').textContent=nfmt(v().guildXP);
+  $('sqRebirth').textContent=v().rebirth;
+  $('sqDailyList').innerHTML=[
+   ['擊敗 5 隻怪物',v().dailyProgress.kills,5],
+   ['施放 3 次技能',v().dailyProgress.skills,3],
+   ['取得 1 件裝備',v().dailyProgress.gear,1]
+  ].map((x,i)=>'<div class="card"><b>'+(x[1]>=x[2]?'✅ ':'📌 ')+x[0]+'</b><div class="bar" style="margin-top:7px"><i style="width:'+Math.min(100,x[1]/x[2]*100)+'%"></i></div><small class="muted">'+Math.min(x[1],x[2])+' / '+x[2]+'</small></div>').join('');
+  const pet=pets.find(x=>x.id===state.activePet),ev=pet?(v().petEvolution[pet.id]||0):0;
+  $('sqPetEvolution').innerHTML=pet?'<div class="item"><div class="itemicon">'+pet.icon+'</div><div><b>'+pet.name+' · 進化階 '+ev+'</b><div class="muted">目前加成 '+(pet.bonus+ev*2)+'% · 進化需要 '+(500+ev*500)+' 金幣及 '+(1+ev)+' 符文碎片</div></div></div>':'尚未選擇出戰寵物';
+  $('sqSupplyInventory').textContent='符文碎片：'+v().runes+' · 生命藥水：'+v().potions+' · 深淵通行證：'+v().abyssTickets;
+  $('sqSocketList').innerHTML=Object.entries(state.equipped).map(([slot,g])=>'<div class="card"><b>'+({weapon:'武器',armor:'防具',accessory:'飾品'}[slot])+'</b><div class="muted">'+(g?g.name+' · '+((g.sockets||[]).length)+'/3 槽':'尚未裝備')+'</div><small class="gold">'+(g?(g.sockets||[]).map(x=>x.label).join('、')||'尚無符文':'請先裝備物品')+'</small></div>').join('');
+ }
+ window.sqFightBoss=function(){
+  if(v().bossDay===today()){notify('今日世界 Boss 已討伐','明天再來挑戰');return}
+  if(!state.classId){showClassPrompt();return}
+  const s=stats(),hp=Math.floor((zones[state.zone].hp*18+state.level*250)*Math.pow(1.12,v().bossKillsV13%8));
+  const dmg=Math.floor(s.atk*(8+state.level*.12)+s.power*.25);
+  if(dmg<hp*.08){notify('戰力不足','建議提升裝備與技能後再挑戰');return}
+  const wins=dmg>=hp*.55;
+  v().bossDay=today();
+  if(wins){v().bossKillsV13++;state.gold+=Math.floor(1000+state.level*35);state.gems+=35;state.shards+=5;grantGear(makeGear(v().bossKillsV13%5===0?'傳說':'史詩'));notify('🐉 世界 Boss 討伐成功','獲得金幣、鑽石、深淵碎片與裝備')}
+  else {state.gold+=250;notify('Boss 未能完全擊敗','造成大量傷害，獲得參戰補給')}
+  persist();render();renderV13();
+ };
+ window.sqRunAbyss=function(){
+  if(!state.classId){showClassPrompt();return}
+  if(v().abyssTickets>0)v().abyssTickets--;
+  const floor=v().abyssFloor,s=stats(),need=Math.floor(80*Math.pow(1.17,floor-1));
+  const score=s.power+(v().rebirth*150);
+  if(score<need){notify('深淵挑戰失敗','本層推薦戰力 '+nfmt(need));return}
+  const boss=floor%10===0,coin= floor*35,exp=floor*18;
+  state.gold+=coin;addXP(exp);if(boss){state.gems+=15;state.shards+=2;grantGear(makeGear('史詩'))}
+  else if(Math.random()<.25)grantGear(makeGear(rollRarity()));
+  v().abyssFloor++;v().abyssBest=Math.max(v().abyssBest,v().abyssFloor-1);
+  notify(boss?'🗼 深淵守關者擊破！':'深淵突破','第 '+floor+' 層 · '+coin+' 金幣 · '+exp+' EXP');
+  persist();render();renderV13();
+ };
+ window.sqClaimDaily=function(){
+  const d=today();if(v().dailyDate!==d){v().dailyDate=d;v().dailyClaims=[]}
+  const tasks=[['kills',5],['skills',3],['gear',1]],names=['狩獵委託','技能修練','戰利品委託'];
+  let count=0;tasks.forEach((t,i)=>{if(v().dailyProgress[t[0]]>=t[1]&&!v().dailyClaims.includes(t[0])){v().dailyClaims.push(t[0]);count++;state.gold+=250;state.gems+=5}});
+  if(!count){notify('尚無可領取委託','完成狩獵、施放技能或取得裝備');return}
+  notify('📜 委託獎勵已領取','完成 '+count+' 項，獲得 '+count*250+' 金幣與 '+count*5+' 鑽石');
+  persist();render();renderV13();
+ };
+ window.sqArenaFight=function(){
+  if(!state.classId){showClassPrompt();return}
+  const s=stats(),foePower=Math.floor(s.power*(.82+Math.random()*.45)),win=s.power>=foePower;
+  if(win){v().arenaScore+=35;state.gold+=300;state.gems+=3;notify('🏟️ 競技勝利','積分 +35 · 金幣 +300')}
+  else {v().arenaScore=Math.max(0,v().arenaScore-10);notify('競技落敗','積分 -10，調整裝備後再戰')}
+  persist();renderV13();render();
+ };
+ window.sqGuildQuest=function(){
+  const cost=200+v().guildLevel*100;if(state.gold<cost){notify('金幣不足','委託需要 '+cost+' 金幣');return}
+  state.gold-=cost;v().guildXP+=100;
+  while(v().guildXP>=v().guildLevel*300){v().guildXP-=v().guildLevel*300;v().guildLevel++;notify('🏰 公會升級','公會達到 Lv.'+v().guildLevel)}
+  notify('公會委託完成','獲得公會貢獻 100');persist();render();renderV13();
+ };
+ window.sqSocketGear=function(){
+  const g=Object.values(state.equipped).find(x=>x);
+  if(!g){notify('尚未裝備','先到背包装備物品');return}
+  if((g.sockets||[]).length>=3){notify('符文槽已滿','每件裝備最多 3 槽');return}
+  if(v().runes<1){notify('符文碎片不足','可在遠征補給商店購買');return}
+  v().runes--;g.sockets=g.sockets||[];
+  const types=[['攻擊符文','atk',Math.max(2,Math.floor(state.level*1.4))],['守護符文','def',Math.max(2,Math.floor(state.level*.9))],['生命符文','hp',Math.max(10,Math.floor(state.level*8))]];
+  const x=types[Math.floor(Math.random()*types.length)];g[x[1]]=(g[x[1]]||0)+x[2];g.sockets.push({label:x[0],stat:x[1],value:x[2]});
+  notify('💎 鑲嵌成功',x[0]+' +'+x[2]);persist();render();renderV13();
+ };
+ window.sqEvolvePet=function(){
+  const p=pets.find(x=>x.id===state.activePet);if(!p){notify('沒有出戰寵物');return}
+  const level=v().petEvolution[p.id]||0,cost=500+level*500,frags=1+level;
+  if(state.gold<cost||v().runes<frags){notify('進化材料不足','需要 '+cost+' 金幣及 '+frags+' 符文碎片');return}
+  state.gold-=cost;v().runes-=frags;v().petEvolution[p.id]=level+1;p.bonus+=0;notify('🐾 寵物進化成功',p.name+' 進化至階級 '+(level+1));
+  persist();render();renderV13();
+ };
+ window.sqRebirthNow=function(){
+  if(state.level<150){notify('尚未達到轉生條件','需要角色 Lv.150');return}
+  if(!confirm('確定進行第 '+(v().rebirth+1)+' 次轉生？等級與區域進度會重置，裝備與大部分資產保留。'))return;
+  v().rebirth++;state.level=1;state.xp=0;state.zone=0;state.unlockedZone=0;state.skillPoints+=5;
+  window.playerHP=stats().hp;spawn();notify('✨ 英雄轉生成功','轉生 '+v().rebirth+' 階，永久戰力加成已生效');
+  persist();render();renderV13();
+ };
+ window.sqBuy=function(type){
+  const data={rune:[500,'runes',1],potion:[300,'potions',1],ticket:[800,'abyssTickets',1]}[type];if(!data)return;
+  if(state.gold<data[0]){notify('金幣不足');return}
+  state.gold-=data[0];v()[data[1]]+=data[2];notify('購買成功','已加入遠征補給');persist();render();renderV13();
+ };
+ // Count daily objectives by wrapping existing combat/reward entry points.
+ const oldDamageEnemy=window.damageEnemy;
+ if(typeof oldDamageEnemy==='function')window.damageEnemy=function(n){const k=state.kills;oldDamageEnemy(n);if(state.kills>k)v().dailyProgress.kills++;persist()};
+ const oldCastSkill=window.castSkill;
+ if(typeof oldCastSkill==='function')window.castSkill=function(which){v().dailyProgress.skills++;oldCastSkill(which);persist()};
+ const oldGrantGear=window.grantGear;
+ if(typeof oldGrantGear==='function')window.grantGear=function(g){v().dailyProgress.gear++;oldGrantGear(g);persist()};
+ const oldGo=window.go;
+ if(typeof oldGo==='function')window.go=function(p){oldGo(p);if(p==='expedition')renderV13()};
+ const oldRender=window.render;
+ if(typeof oldRender==='function')window.render=function(){oldRender();renderV13()};
+ // Rebirth grants a permanent multiplier without changing the original stats implementation.
+ const oldStats=window.stats;
+ if(typeof oldStats==='function')window.stats=function(){const s=oldStats();const petLevel=v().petEvolution[state.activePet]||0;const b=(1+v().rebirth*.08)*(1+petLevel*.02);s.atk=Math.floor(s.atk*b);s.def=Math.floor(s.def*b);s.hp=Math.floor(s.hp*b);s.power=Math.floor(s.power*b);return s};
+ document.addEventListener('DOMContentLoaded',renderV13);
+ setTimeout(renderV13,0);
+})();
+
 </script>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
@@ -256,7 +459,8 @@ function init(){
  }catch(e){status.textContent='3D 載入失敗';console.error(e)}
 }
 function resize(){if(!renderer||!camera)return;let w=stage.clientWidth,h=stage.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
-// The battle tab is initially display:none; resize again as soon as it becomes visible.\nif('ResizeObserver' in window){const stageObserver=new ResizeObserver(()=>resize());stageObserver.observe(stage)}
+// The battle tab is initially display:none; resize again as soon as it becomes visible.
+if('ResizeObserver' in window){const stageObserver=new ResizeObserver(()=>resize());stageObserver.observe(stage)}
 window.addEventListener('load',()=>requestAnimationFrame(resize));
 function sync(d){last=d||last;if(!scene||!d)return;let colors=[0x5a8b75,0x8b7659,0x82b7d8,0x797b9d,0xc96d36,0x6e3e80,0x9b5cbd];scene.fog.color.setHex(colors[d.zone]||0x15243a);
  if(d.classId&&hero.userData.kind!==d.classId){scene.remove(hero);hero=humanoid(d.classId);hero.userData.kind=d.classId;hero.position.set(-2,0,.1);scene.add(hero)}
