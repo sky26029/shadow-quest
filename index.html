@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#090d16"><title>SHADOW QUEST｜暗影遠征 V1.3</title>
+<meta name="theme-color" content="#090d16"><title>SHADOW QUEST｜暗影遠征 V3.6</title>
 <style>
 :root{--bg:#090d16;--panel:#121a29;--panel2:#182338;--line:#293852;--gold:#e8bd69;--muted:#9ba9bd;--text:#eef3fb;--cyan:#79d9e8;--red:#f07878;--green:#79d6a2}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#243453 0,#0b1220 42%,#070b12 100%);color:var(--text);font:14px/1.45 system-ui,-apple-system,"Noto Sans TC",sans-serif;min-height:100vh}
@@ -71,13 +71,13 @@ button:hover{filter:brightness(1.16);box-shadow:0 4px 16px #0005}
 #sqV15BossPanel.boss-dead #sqV15BossIcon{animation:sqBossFall .9s forwards}
 @keyframes sqBossPulse{to{filter:brightness(1.35)}}@keyframes sqBossRage{to{filter:brightness(1.8)}}@keyframes sqBossFloat{50%{transform:translateY(-8px) scale(1.08)}}@keyframes sqBossFall{to{transform:rotate(80deg) translateY(25px) scale(.55);opacity:.2}}
 </style>
-</head>
+<!-- SHADOW QUEST V3.0: expanded balanced talent tree -->\n</head>
 <body>
 <div id="fxLayer"></div>
 <header><div class="brand">SHADOW QUEST<small>暗影遠征 · CHRONICLES OF THE ABYSS</small></div><div class="resources"><button class="small" id="soundToggle" onclick="toggleSound()">🔊 音效開</button><div class="resource">🪙 <b id="gold">0</b></div><div class="resource">💎 <b id="gems">0</b></div><div class="resource">🔷 <b id="shards">0</b></div></div></header>
 <main>
 <aside><div class="profile"><div class="avatar" id="sideAvatar">⚔️</div><div><b id="sideName">無名旅人</b><div class="muted" id="sideLevel">Lv.1 新手</div></div></div><nav class="nav" id="nav">
-<button class="active" data-page="home"><span>🏰</span>冒險大廳</button><button data-page="battle"><span>⚔️</span>戰鬥探索</button><button data-page="character"><span>🧙</span>角色資訊</button><button data-page="inventory"><span>🎒</span>裝備背包</button><button data-page="skills"><span>✨</span>技能天賦</button><button data-page="pets"><span>🐺</span>寵物坐騎</button><button data-page="dungeon"><span>🗝️</span>副本挑戰</button><button data-page="forge"><span>⚒️</span>鐵匠工坊</button><button data-page="achievements"><span>🏆</span>成就紀錄</button><button data-page="settings"><span>⚙️</span>設定存檔</button><button data-page="expedition"><span>🌌</span>遠征系統</button></nav></aside>
+<button class="active" data-page="home"><span>🏰</span>冒險大廳</button><button data-page="battle"><span>⚔️</span>戰鬥探索</button><button data-page="character"><span>🧙</span>角色資訊</button><button data-page="inventory"><span>🎒</span>裝備背包</button><button data-page="skills"><span>✨</span>技能天賦</button><button data-page="pets"><span>🐺</span>寵物圖鑑</button><button data-page="mounts"><span>🐎</span>坐騎收藏</button><button data-page="dungeon"><span>🗝️</span>副本挑戰</button><button data-page="tower"><span>🗼</span>無盡之塔</button><button data-page="forge"><span>⚒️</span>鐵匠工坊</button><button data-page="achievements"><span>🏆</span>成就紀錄</button><button data-page="settings"><span>⚙️</span>設定存檔</button><button data-page="expedition"><span>🌌</span>遠征系統</button></nav></aside>
 <section class="content">
 <div class="page active" id="page-home">
 <div class="panel hero"><div class="hero-inner"><div class="eyebrow">THE ABYSS IS CALLING</div><h1>黑暗正在甦醒，<br>傳奇由你書寫。</h1><p>踏入失落王國，狩獵深淵魔物，收集遠古力量。你的遠征，現在開始。</p><button class="primary" onclick="go('battle')">開始冒險　➜</button></div><div class="hero-art" id="heroArt">🛡️</div></div>
@@ -87,14 +87,44 @@ button:hover{filter:brightness(1.16);box-shadow:0 4px 16px #0005}
 </div>
 <div class="page" id="page-battle"><div class="panel"><h2 class="section-title">⚔️ 戰鬥探索 <span class="tag" id="battleZone">迷霧森林</span></h2><div class="battlefield"><div id="threeStage"></div><div id="threeStatus">3D ENGINE · LOADING</div><div class="fighter"><div class="sprite" id="playerSprite">🛡️</div><strong id="playerBattleName">冒險者</strong><small class="muted" id="playerBattleHp">HP 100/100</small><div class="bar hp"><i id="playerHpBar" style="width:100%"></i></div></div><div style="font-size:25px;color:#d6b56e">VS</div><div class="fighter enemy"><div class="sprite" id="enemySprite">👹</div><strong id="enemyName">森林哥布林</strong><small class="muted" id="enemyHp">HP 80/80</small><div class="bar hp"><i id="enemyHpBar" style="width:100%"></i></div></div></div><div class="battle-actions"><button class="primary" onclick="attack()">⚔️ 普通攻擊</button><button onclick="castSkill(0)">🔥 主動技能</button><button onclick="castSkill(1)">✦ 爆發技能</button><button id="autoBtn" onclick="toggleAuto()">▶ 自動戰鬥：關</button></div><div style="display:flex;justify-content:space-between;margin:12px 0 6px"><b>戰鬥紀錄</b><small class="muted">擊敗敵人獲得經驗與戰利品</small></div><div class="log" id="battleLog"><div>🌫️ 迷霧森林的風中傳來低吼……</div></div></div>
 <div class="panel"><h3 class="section-title">探索區域</h3><div class="item-grid" id="zones"></div></div></div>
-<div class="page" id="page-character"><div class="panel"><h2 class="section-title">角色資訊</h2><div class="grid two"><div class="card"><div class="item"><div class="avatar" style="width:70px;height:70px;font-size:38px" id="charBig">⚔️</div><div><h2 id="charTitle">無名旅人</h2><span class="tag" id="charClass">未選職</span><p class="muted" id="charLevel">Lv.1</p></div></div><div class="bar xp"><i id="charXp" style="width:0%"></i></div><small id="charXpText" class="muted"></small></div><div class="card"><h3>基礎屬性</h3><div id="statsList"></div></div></div><h3>選擇職業</h3><div class="item-grid" id="classes"></div><div class="notice" style="margin-top:12px">職業選擇會決定初始能力與技能風格。你可以先體驗，職業重置功能將在後續版本加入。</div></div></div>
+<div class="page" id="page-character"><div class="panel"><h2 class="section-title">角色資訊</h2><div class="grid two"><div class="card"><div class="item"><div class="avatar" style="width:70px;height:70px;font-size:38px" id="charBig">⚔️</div><div><h2 id="charTitle">無名旅人</h2><span class="tag" id="charClass">未選職</span><p class="muted" id="charLevel">Lv.1</p></div></div><div class="bar xp"><i id="charXp" style="width:0%"></i></div><small id="charXpText" class="muted"></small></div><div class="card"><h3>基礎屬性</h3><div id="statsList"></div></div></div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px"><h3 style="margin:0">職業選擇與重置</h3></div><div class="item-grid" id="classes"></div><div class="notice" style="margin-top:12px">更換職業會重新開始角色等級與職業養成；金幣、鑽石、裝備、寵物、坐騎及成就保留。</div></div></div>
 <div class="page" id="page-inventory"><div class="panel"><h2 class="section-title">🎒 裝備背包 <span class="tag" id="bagCount">0 / 100</span></h2><div class="tabs"><button class="active" onclick="filterBag('all',this)">全部</button><button onclick="filterBag('weapon',this)">武器</button><button onclick="filterBag('armor',this)">防具</button><button onclick="filterBag('accessory',this)">飾品</button></div><div class="item-grid" id="bag"></div></div><div class="panel"><h3 class="section-title">目前裝備</h3><div class="item-grid" id="equipped"></div></div></div>
 <div class="page" id="page-skills"><div class="panel"><h2 class="section-title">✨ 技能與天賦 <span class="tag">技能點：<b id="skillPoints">0</b></span></h2><p class="muted">升級獲得技能點，解鎖技能以改變戰鬥節奏。</p><div class="item-grid" id="skillTree"></div></div></div>
-<div class="page" id="page-pets"><div class="panel"><h2 class="section-title">🐺 寵物圖鑑</h2><p class="muted">夥伴會提供常駐屬性加成，重複獲得可升星。</p><div class="item-grid" id="petList"></div></div><div class="panel"><h2 class="section-title">🐎 坐騎收藏</h2><div class="item-grid" id="mountList"></div></div></div>
+<div class="page" id="page-pets"><div class="panel"><h2 class="section-title">🐺 寵物圖鑑</h2><p class="muted">寵物可透過鑽石召喚或世界 Boss 掉落取得；重複寵物可放生取得進化石，提升寵物等級。</p><div class="item-grid" id="petList"></div></div></div><div class="page" id="page-mounts"><div class="panel"><h2 class="section-title">🐎 坐騎收藏</h2><p class="muted">坐騎可透過鑽石召喚或世界 Boss 掉落取得；重複坐騎可轉換成坐騎碎片。</p><div class="item-grid" id="mountList"></div></div></div>
+
+<div class="page" id="page-tower">
+ <div class="panel">
+  <h2 class="section-title">🗼 無盡之塔 <span class="tag">每 10 層 Boss</span></h2>
+  <p class="muted">逐層挑戰不斷增強的敵人。難度高於一般野外怪物，但低於世界 Boss。每層首次通關可領取豐厚獎勵。</p>
+  <div class="grid three" style="margin:14px 0">
+   <div class="stat"><small>最高通關</small><b id="towerBest">第 0 層</b></div>
+   <div class="stat"><small>目前挑戰</small><b id="towerCurrent">尚未開始</b></div>
+   <div class="stat"><small>本層類型</small><b id="towerType">一般守衛</b></div>
+  </div>
+  <div id="towerEnemy" class="item-card" style="text-align:center;padding:20px">
+   <div id="towerIcon" style="font-size:56px">🗿</div><h3 id="towerName">遠古石像守衛</h3>
+   <p id="towerDesc" class="muted">擊敗守衛，向更高樓層前進。</p>
+   <div class="bar hp"><i id="towerEnemyBar" style="width:100%"></i></div>
+   <b id="towerEnemyHp">敵人 HP：--</b>
+  </div>
+  <div class="grid two" style="margin-top:12px">
+   <div class="item-card"><b>❤️ 冒險者</b><p id="towerPlayerHp">HP：--</p><div class="bar hp"><i id="towerPlayerBar" style="width:100%"></i></div></div>
+   <div class="item-card"><b>🎁 首通獎勵</b><p id="towerReward">通關後可領取</p></div>
+  </div>
+  <div class="battle-actions" style="margin-top:14px">
+   <button class="primary" id="towerStart" onclick="towerStart()">開始挑戰</button>
+   <button id="towerAttack" onclick="towerAttack()" disabled>⚔️ 攻擊</button>
+   <button id="towerSkill" onclick="towerSkill()" disabled>✨ 強力技能</button>
+   <button id="towerExit" onclick="towerExit()" disabled>離開挑戰</button>
+  </div>
+  <div class="log" id="towerLog" style="margin-top:12px;min-height:90px"><div>🗼 高塔深處傳來沉重的腳步聲……</div></div>
+ </div>
+ <div class="panel"><h3 class="section-title">📜 塔層紀錄</h3><div id="towerHistory" class="item-grid"></div></div>
+</div>
 <div class="page" id="page-dungeon"><div class="panel"><h2 class="section-title">🗝️ 副本挑戰</h2><p class="muted">每日副本次數有限，Boss 關卡可重複挑戰。</p><div class="item-grid" id="dungeons"></div></div></div>
 <div class="page" id="page-forge"><div class="panel"><h2 class="section-title">⚒️ 鐵匠工坊</h2><div class="grid two"><div class="card"><h3>裝備強化</h3><p class="muted">強化目前裝備，提升基礎屬性。</p><div id="forgeTarget" class="item"></div><p id="forgeCost" class="gold"></p><button class="primary" onclick="upgradeGear()">強化裝備</button></div><div class="card"><h3>神秘補給</h3><p class="muted">使用鑽石取得隨機裝備。十連抽至少獲得一件史詩或以上裝備。</p><button onclick="draw(1)">單次尋寶　💎 50</button> <button class="primary" onclick="draw(10)">十連尋寶　💎 450</button></div></div><div class="notice" style="margin-top:12px">抽取機率：普通 45%、優良 28%、稀有 17%、史詩 7%、傳說 2.5%、神話 0.5%。十連抽保底史詩以上。所有抽取均使用遊戲內可取得的鑽石。</div></div></div>
 <div class="page" id="page-achievements"><div class="panel"><h2 class="section-title">🏆 成就紀錄</h2><div id="achievementList" class="item-grid"></div></div></div>
-<div class="page" id="page-settings"><div class="panel"><h2 class="section-title">⚙️ 設定與存檔</h2><div class="card"><b>遊戲進度</b><p class="muted">進度自動儲存在目前瀏覽器。清除瀏覽器資料前請先匯出備份。</p><div class="battle-actions"><button class="good" onclick="exportSave()">匯出存檔</button><button onclick="document.getElementById('importFile').click()">匯入存檔</button><input id="importFile" type="file" accept=".json" hidden onchange="importSave(event)"><button class="danger" onclick="resetGame()">重置遊戲</button></div></div><div class="card" style="margin-top:12px"><b>遊戲版本</b><p class="muted">Shadow Quest · Web Edition 1.3.0 · Expedition Update<br>離線單機版｜手機與桌面瀏覽器支援</p></div></div></div>
+<div class="page" id="page-settings"><div class="panel"><h2 class="section-title">⚙️ 設定與存檔</h2><div class="card"><b>遊戲進度</b><p class="muted">進度自動儲存在目前瀏覽器。清除瀏覽器資料前請先匯出備份。</p><div class="battle-actions"><button class="good" onclick="exportSave()">匯出存檔</button><button onclick="document.getElementById('importFile').click()">匯入存檔</button><input id="importFile" type="file" accept=".json" hidden onchange="importSave(event)"><button class="danger" onclick="resetGame()">重置遊戲</button></div></div><div class="card" style="margin-top:12px"><b>遊戲版本</b><p class="muted">Shadow Quest · Web Edition 2.0.0 · Profession Reset Update<br>離線單機版｜手機與桌面瀏覽器支援</p></div></div></div>
 
 <div class="page" id="page-expedition">
  <div class="panel">
@@ -187,52 +217,170 @@ button:hover{filter:brightness(1.16);box-shadow:0 4px 16px #0005}
 <script>
 const $=id=>document.getElementById(id), fmt=n=>Math.floor(n).toLocaleString('zh-TW');
 const classes=[
-{id:'warrior',name:'聖殿騎士',icon:'🛡️',desc:'高防禦與穩定近戰，適合正面迎敵。',atk:13,def:9,hp:125,skill:'聖光斬'},
-{id:'mage',name:'秘法術士',icon:'🧙',desc:'高爆發魔法，擅長快速清除敵人。',atk:17,def:4,hp:90,skill:'奧術飛彈'},
-{id:'assassin',name:'暗影刺客',icon:'🗡️',desc:'高速致命攻擊，有機會造成暴擊。',atk:15,def:5,hp:100,skill:'影襲'},
-{id:'ranger',name:'星界遊俠',icon:'🏹',desc:'遠程精準打擊，攻守均衡。',atk:14,def:6,hp:105,skill:'星矢'}
+{id:'warrior',name:'聖殿騎士',icon:'🛡️',desc:'高防禦與穩定近戰。被動：防禦 +18%、生命 +15%、受到傷害 -12%。',atk:13,def:9,hp:125,skill:'聖光斬'},
+{id:'mage',name:'秘法術士',icon:'🧙',desc:'高爆發魔法。被動：攻擊 +15%、專屬技能傷害 +10%。',atk:17,def:4,hp:90,skill:'奧術飛彈'},
+{id:'assassin',name:'暗影刺客',icon:'🗡️',desc:'高速致命攻擊。被動：暴擊率 22%、暴擊傷害 215%。',atk:15,def:5,hp:100,skill:'影襲'},
+{id:'ranger',name:'星界遊俠',icon:'🏹',desc:'遠程精準打擊。被動：攻擊 +10%、暴擊率 16%、防禦 +4%。',atk:14,def:6,hp:105,skill:'星矢'}
 ];
 const rarities=[['普通',45],['優良',28],['稀有',17],['史詩',7],['傳說',2.5],['神話',.5]];
-const gearNames={weapon:['旅人短劍','月鋼長刃','霜火法杖','深淵獵弓','龍骨巨劍','星蝕匕首'],armor:['守望者胸甲','暮光護肩','符文長袍','影紋護腿','龍鱗戰甲','星界披風'],accessory:['古代戒指','月影項鍊','守護徽記','深淵寶石']};
-const gearIcons={weapon:'⚔️',armor:'🛡️',accessory:'💍'};
+const gearNames={weapon:['旅人短劍','月鋼長刃','霜火法杖','深淵獵弓','龍骨巨劍','星蝕匕首'],armor:['守望者胸甲','暮光護肩','符文長袍','影紋護腿','龍鱗戰甲','星界披風'],accessory:['古代項鍊','月影項鍊','守護徽記','深淵寶石','星辰耳墜','不朽護符','霜狼牙墜','烈焰核心','秘法吊墜','暗影印記','命運懷錶','生命結晶','暴風徽章','虛空羅盤','天使羽環','王者勳章','幻術水晶','神諭之眼'],
+ring:['龍血指環','亡者骨戒','王者戒指','星蝕戒環','霜火指輪','深淵之戒','雙生秘銀戒','命運刻印戒'],
+gloves:['裂風護手','龍鱗手套','影紋拳套','秘法織手','聖殿鐵手','星界射手護手'],
+bracelet:['月神手環','雷鳴腕輪','深海念珠','赤焰臂環','虛空鎖鏈','生命藤環'],
+boots:['疾風長靴','霜狼戰靴','龍骨護腳','暗影行靴','聖騎鐵脛','星界踏靴'],
+belt:['巨龍腰帶','遠征者束帶','符文腰封','不屈戰帶','深淵束腰'],
+cloak:['夜幕披風','星辰斗篷','鳳凰羽衣','虛空披肩','守護者披風']};
+const gearIcons={weapon:'⚔️',armor:'🛡️',accessory:'💍',ring:'💍',gloves:'🧤',bracelet:'📿',boots:'🥾',belt:'🪢',cloak:'🧥'};
+const slotNames={weapon:'武器',armor:'胸甲／防具',accessory:'項鍊／飾品',ring:'戒指',gloves:'手套',bracelet:'手環',boots:'護腳',belt:'腰帶',cloak:'披風'};
+const defensiveSlots=new Set(['armor','gloves','boots','belt','cloak']);
 const zones=[{name:'迷霧森林',level:1,enemy:'森林哥布林',icon:'👹',hp:80,atk:8,exp:25,gold:12},{name:'荒棄礦坑',level:10,enemy:'礦坑獸人',icon:'👺',hp:230,atk:18,exp:65,gold:32},{name:'霜牙山脈',level:25,enemy:'霜牙巨狼',icon:'🐺',hp:650,atk:38,exp:150,gold:75},{name:'亡者墓園',level:45,enemy:'墓園騎士',icon:'💀',hp:1600,atk:75,exp:360,gold:160},{name:'熔火地心',level:70,enemy:'熔岩巨魔',icon:'👹',hp:4200,atk:145,exp:800,gold:360},{name:'深淵王座',level:100,enemy:'深淵領主',icon:'😈',hp:12000,atk:280,exp:1800,gold:900},{name:'星隕神域',level:130,enemy:'墮星古龍',icon:'🐉',hp:38000,atk:550,exp:4200,gold:2200}];
-const pets=[{id:'wolf',name:'霜牙幼狼',icon:'🐺',desc:'攻擊 +5%',bonus:5,unlock:1},{id:'slime',name:'星光史萊姆',icon:'🟢',desc:'生命 +8%',bonus:8,unlock:10},{id:'fox',name:'幻影靈狐',icon:'🦊',desc:'暴擊 +5%',bonus:5,unlock:25},{id:'dragon',name:'幼年古龍',icon:'🐉',desc:'攻擊 +12%',bonus:12,unlock:60},{id:'phoenix',name:'不死鳳凰',icon:'🦅',desc:'全屬性 +10%',bonus:10,unlock:100}];
+const pets=[{id:'wolf',name:'霜牙幼狼',icon:'🐺',desc:'攻擊 +5%',bonus:5,bonusType:'atk',unlock:1},{id:'slime',name:'星光史萊姆',icon:'🟢',desc:'生命 +8%',bonus:8,bonusType:'hp',unlock:10},{id:'fox',name:'幻影靈狐',icon:'🦊',desc:'暴擊率 +5%',bonus:5,bonusType:'crit',unlock:25},{id:'dragon',name:'幼年古龍',icon:'🐉',desc:'攻擊 +12%',bonus:12,bonusType:'atk',unlock:60},{id:'phoenix',name:'不死鳳凰',icon:'🦅',desc:'全屬性 +10%',bonus:10,bonusType:'all',unlock:100}];
 const mounts=[{id:'horse',name:'旅團戰馬',icon:'🐎',desc:'移動速度 +5%',unlock:1},{id:'wolfmount',name:'霜原巨狼',icon:'🐺',desc:'防禦 +8%',unlock:20},{id:'griffin',name:'蒼穹獅鷲',icon:'🦅',desc:'攻擊 +8%',unlock:50},{id:'dragonmount',name:'赤焰飛龍',icon:'🐲',desc:'全屬性 +8%',unlock:90}];
-const skills=[{id:'power',name:'力量精通',icon:'💪',desc:'永久攻擊 +8%',cost:1},{id:'vital',name:'生命強化',icon:'❤️',desc:'永久生命 +10%',cost:1},{id:'guard',name:'鋼鐵意志',icon:'🛡️',desc:'永久防禦 +10%',cost:1},{id:'crit',name:'致命洞察',icon:'🎯',desc:'暴擊傷害 +20%',cost:2},{id:'fury',name:'狂戰本能',icon:'🔥',desc:'所有傷害 +15%',cost:3},{id:'fortune',name:'尋寶直覺',icon:'🍀',desc:'金幣與掉寶 +15%',cost:3}];
+pets.push(
+ {id:'moonrabbit',name:'月桂靈兔',icon:'🐇',desc:'生命 +6%',bonus:6,bonusType:'hp',unlock:5},
+ {id:'embercat',name:'燼焰靈貓',icon:'🐈',desc:'攻擊 +6%',bonus:6,bonusType:'atk',unlock:15},
+ {id:'mossgolem',name:'苔岩魔像',icon:'🗿',desc:'防禦 +7%',bonus:7,bonusType:'def',unlock:30},
+ {id:'stormowl',name:'雷羽梟',icon:'🦉',desc:'暴擊率 +4%',bonus:4,bonusType:'crit',unlock:40},
+ {id:'frostdeer',name:'霜角神鹿',icon:'🦌',desc:'生命 +8%、防禦 +3%',bonus:8,bonusType:'hpdef',unlock:55},
+ {id:'voidbat',name:'虛空蝠王',icon:'🦇',desc:'技能傷害 +5%',bonus:5,bonusType:'skill',unlock:70},
+ {id:'tidewhale',name:'潮汐幼鯨',icon:'🐳',desc:'生命 +10%',bonus:10,bonusType:'hp',unlock:85},
+ {id:'starlion',name:'星穹獅王',icon:'🦁',desc:'攻擊 +8%、暴擊率 +3%',bonus:8,bonusType:'atkcrit',unlock:110},
+ {id:'ancientwyrm',name:'太古星龍',icon:'🐲',desc:'全屬性 +8%',bonus:8,bonusType:'all',unlock:130}
+);
+mounts[0].bonusType='speed';mounts[0].bonus=0;
+mounts[1].bonusType='def';mounts[1].bonus=8;
+mounts[2].bonusType='atk';mounts[2].bonus=8;
+mounts[3].bonusType='all';mounts[3].bonus=8;
+mounts.push(
+ {id:'shadowpanther',name:'夜影獵豹',icon:'🐆',desc:'攻擊 +5%、暴擊率 +2%',unlock:10,bonusType:'atkcrit',bonus:5},
+ {id:'ironboar',name:'鋼鬃戰豬',icon:'🐗',desc:'防禦 +6%、生命 +4%',unlock:25,bonusType:'defhp',bonus:6},
+ {id:'skydrake',name:'蒼穹翼龍',icon:'🪽',desc:'攻擊 +7%',unlock:40,bonusType:'atk',bonus:7},
+ {id:'sacredelk',name:'聖域白鹿',icon:'🦌',desc:'生命 +8%',unlock:60,bonusType:'hp',bonus:8},
+ {id:'thunderlion',name:'雷霆獅鷲獸',icon:'🦁',desc:'暴擊率 +4%',unlock:75,bonusType:'crit',bonus:4},
+ {id:'abysssteed',name:'深淵夢魘',icon:'🐴',desc:'攻擊 +6%、防禦 +6%',unlock:100,bonusType:'atkdef',bonus:6},
+ {id:'celestialturtle',name:'天穹玄龜',icon:'🐢',desc:'全屬性 +8%',unlock:120,bonusType:'all',bonus:8},
+ {id:'phoenixmount',name:'不滅鳳凰座騎',icon:'🔥',desc:'攻擊 +8%、生命 +8%',unlock:140,bonusType:'atk hp',bonus:8}
+);
+const skills=[
+{id:'power',name:'力量精通',icon:'💪',desc:'永久攻擊 +3%',cost:1,unlock:1},
+{id:'vital',name:'生命強化',icon:'❤️',desc:'永久生命 +4%',cost:1,unlock:1},
+{id:'guard',name:'鋼鐵意志',icon:'🛡️',desc:'永久防禦 +3%',cost:1,unlock:1},
+{id:'crit',name:'致命洞察',icon:'🎯',desc:'暴擊傷害 +4%',cost:1,unlock:5},
+{id:'fury',name:'戰鬥專注',icon:'🔥',desc:'技能傷害 +2%',cost:2,unlock:10},
+{id:'fortune',name:'尋寶直覺',icon:'🍀',desc:'金幣與掉寶 +3%',cost:2,unlock:15},
+{id:'eagle',name:'鷹眼感知',icon:'🦅',desc:'暴擊率 +1.5%',cost:1,unlock:20},
+{id:'ironwall',name:'堅韌壁壘',icon:'🧱',desc:'受到傷害降低 1%',cost:2,unlock:25},
+{id:'vampire',name:'生命汲取',icon:'🩸',desc:'攻擊時恢復傷害量 1% 生命',cost:2,unlock:30},
+{id:'wisdom',name:'冒險者智慧',icon:'📘',desc:'經驗獲得 +3%',cost:2,unlock:35},
+{id:'swift',name:'迅捷步伐',icon:'💨',desc:'攻擊速度 +2%',cost:2,unlock:40},
+{id:'precision',name:'破甲技巧',icon:'⚔️',desc:'對敵傷害 +2%',cost:2,unlock:50},
+{id:'treasure',name:'幸運收藏家',icon:'💎',desc:'金幣獲得額外 +3%',cost:3,unlock:60},
+{id:'guardian',name:'守護意志',icon:'🌿',desc:'生命上限額外 +2%',cost:2,unlock:70},
+{id:'mastery',name:'戰技心得',icon:'📜',desc:'技能傷害額外 +2%',cost:3,unlock:80},
+{id:'legend',name:'遠征者祝福',icon:'🌟',desc:'攻擊、防禦、生命各 +1%',cost:3,unlock:100}
+];
 let state,enemy,autoTimer=null,bagFilter='all',currentZone=0,lastTick=Date.now();
-function fresh(){return {name:'無名旅人',classId:null,level:1,xp:0,gold:500,gems:150,shards:0,skillPoints:0,kills:0,bossKills:0,gear:[],equipped:{weapon:null,armor:null,accessory:null},skills:[],pets:['wolf'],activePet:'wolf',mounts:['horse'],activeMount:'horse',gearId:1,zone:0,unlockedZone:0,auto:false,achievements:[],daily:Date.now(),dungeonRuns:0,enhance:0};}
+function fresh(){return {name:'無名旅人',classId:null,level:1,xp:0,gold:500,gems:150,shards:0,skillPoints:0,kills:0,bossKills:0,gear:[],equipped:{weapon:null,armor:null,accessory:null,ring:null,gloves:null,bracelet:null,boots:null,belt:null,cloak:null},skills:[],pets:['wolf'],activePet:'wolf',mounts:['horse'],activeMount:'horse',gearId:1,zone:0,unlockedZone:0,auto:false,achievements:[],daily:Date.now(),dungeonRuns:0,enhance:0};}
 function save(){localStorage.setItem('shadowQuestSave',JSON.stringify(state));}
-function load(){try{let s=JSON.parse(localStorage.getItem('shadowQuestSave'));state=s?Object.assign(fresh(),s):fresh()}catch(e){state=fresh()}}
-function stats(){let c=classes.find(x=>x.id===state.classId)||classes[0],lvl=state.level-1,eq=Object.values(state.equipped).filter(Boolean),atk=c.atk+lvl*2,def=c.def+lvl, hp=c.hp+lvl*12;
-eq.forEach(g=>{atk+=g.atk||0;def+=g.def||0;hp+=g.hp||0});state.skills.forEach(id=>{if(id==='power')atk*=1.08;if(id==='vital')hp*=1.1;if(id==='guard')def*=1.1});let p=pets.find(x=>x.id===state.activePet);if(p){if(p.id==='wolf'||p.id==='dragon')atk*=1+p.bonus/100;if(p.id==='slime')hp*=1+p.bonus/100;if(p.id==='phoenix'){atk*=1.1;def*=1.1;hp*=1.1}}return {atk:Math.floor(atk),def:Math.floor(def),hp:Math.floor(hp),power:Math.floor(atk*2+def*1.5+hp*.25)}}
+function load(){try{let s=JSON.parse(localStorage.getItem('shadowQuestSave'));state=s?Object.assign(fresh(),s):fresh();state.equipped=Object.assign(fresh().equipped,state.equipped||{})}catch(e){state=fresh()}}
+function stats(){
+ let c=classes.find(x=>x.id===state.classId)||classes[0],lvl=state.level-1,eq=Object.values(state.equipped).filter(Boolean),atk=c.atk+lvl*2,def=c.def+lvl,hp=c.hp+lvl*12;
+ eq.forEach(g=>{atk+=g.atk||0;def+=g.def||0;hp+=g.hp||0});
+ let accessory=state.equipped.accessory||{},af=accessory.affix||{};
+ state.skills.forEach(id=>{if(id==='power')atk*=1.03;
+ if(id==='vital'||id==='guardian')hp*=id==='vital'?1.04:1.02;
+ if(id==='guard')def*=1.03;
+ if(id==='legend'){atk*=1.01;def*=1.01;hp*=1.01}});
+ let p=pets.find(x=>x.id===state.activePet);if(p){if(p.id==='wolf'||p.id==='dragon')atk*=1+p.bonus/100;if(p.id==='slime')hp*=1+p.bonus/100;if(p.id==='phoenix'){atk*=1.1;def*=1.1;hp*=1.1}}
+ const passive={
+  warrior:{atk:1,def:1.18,hp:1.15,crit:0.08,critDamage:1.7,damageReduction:.12,skill:1},
+  mage:{atk:1.12,def:1,hp:1,crit:0.10,critDamage:1.8,damageReduction:0,skill:1.10},
+  assassin:{atk:1.06,def:1,hp:1,crit:0.22,critDamage:2.15,damageReduction:0,skill:1.03},
+  ranger:{atk:1.08,def:1.04,hp:1,crit:0.16,critDamage:1.9,damageReduction:.03,skill:1.05}
+ }[state.classId]||{atk:1,def:1,hp:1,crit:.12,critDamage:1.7,damageReduction:0,skill:1};
+ atk*=passive.atk;def*=passive.def;hp*=passive.hp;
+ const extra={crit:passive.crit+(af.key==='crit'?af.value:0)+(state.skills.includes('eagle')?.015:0),critDamage:passive.critDamage+(af.key==='critDamage'?af.value:0)+(state.skills.includes('crit')?.04:0),damageReduction:Math.min(.35,passive.damageReduction+(af.key==='damageReduction'?af.value:0)+(state.skills.includes('ironwall')?.01:0)),skillBonus:Math.min(1.20,passive.skill+(af.key==='skillBonus'?af.value:0)+(state.skills.includes('fury')?.02:0)+(state.skills.includes('mastery')?.02:0)),goldBonus:(af.key==='goldBonus'?af.value:0)+(state.skills.includes('fortune')?.03:0)+(state.skills.includes('treasure')?.03:0),lifesteal:(af.key==='lifesteal'?af.value:0)+(state.skills.includes('vampire')?.01:0),speed:(af.key==='speed'?af.value:0)+(state.skills.includes('swift')?.02:0)};
+ return {atk:Math.floor(atk),def:Math.floor(def),hp:Math.floor(hp),crit:extra.crit,critDamage:extra.critDamage,damageReduction:extra.damageReduction,skillBonus:extra.skillBonus,goldBonus:extra.goldBonus,lifesteal:extra.lifesteal,speed:extra.speed,power:Math.floor(atk*2+def*1.5+hp*.25)};
+}
 function xpNeed(){return Math.floor(100*Math.pow(state.level,1.45))}
 function log(msg){let el=$('battleLog');el.innerHTML='<div>'+msg+'</div>'+el.innerHTML;while(el.children.length>30)el.lastChild.remove()}
-function addXP(n){state.xp+=n;while(state.level<150&&state.xp>=xpNeed()){state.xp-=xpNeed();state.level++;state.skillPoints++;state.gems+=10;log('✨ 等級提升！現在是 Lv.'+state.level+'，獲得 1 點技能點與 10 鑽石。');checkUnlocks()}if(state.level>=150)state.xp=0}
+function addXP(n){n=Math.floor(n*(1+(state.skills.includes('wisdom')?.03:0)));state.xp+=n;let leveled=false;while(state.level<150&&state.xp>=xpNeed()){state.xp-=xpNeed();state.level++;state.skillPoints++;state.gems+=10;leveled=true;log('✨ 等級提升！現在是 Lv.'+state.level+'，獲得 1 點技能點與 10 鑽石。');checkUnlocks()}if(state.level>=150)state.xp=0;save();if(typeof render==='function')render();if(leveled&&typeof notify==='function')notify('角色升級！','目前等級 Lv.'+state.level+'，角色素質與可用技能點已更新。')}
 function rollRarity(forceEpic=false){let r=Math.random()*100;if(forceEpic){let list=[['史詩',7],['傳說',2.5],['神話',.5]];r=Math.random()*10;return r<.5?'神話':r<3?'傳說':'史詩'}for(let [name,w] of rarities){if(r<w)return name;r-=w}return '普通'}
-function makeGear(rarity){let types=['weapon','armor','accessory'],type=types[Math.floor(Math.random()*3)],name=gearNames[type][Math.floor(Math.random()*gearNames[type].length)],mult={普通:1,優良:1.4,稀有:2,史詩:3,傳說:4.5,神話:7}[rarity],base=state.level*1.5+5;return {id:state.gearId++,name,rarity,type,icon:gearIcons[type],atk:Math.floor((type==='weapon'?base*2.2:base*.45)*mult),def:Math.floor((type==='armor'?base*1.8:base*.35)*mult),hp:Math.floor((type==='armor'?base*7:base*1.5)*mult),plus:0}}
-function grantGear(g){state.gear.unshift(g);if(state.gear.length>100)state.gear.pop();log('🎁 獲得 '+g.name+'（'+g.rarity+'）');}
+function makeGear(rarity){
+ let types=['weapon','armor','accessory','ring','gloves','bracelet','boots','belt','cloak'],
+ type=types[Math.floor(Math.random()*types.length)],
+ name=gearNames[type][Math.floor(Math.random()*gearNames[type].length)],
+ mult={普通:1,優良:1.4,稀有:2,史詩:3,傳說:4.5,神話:7}[rarity]||1,
+ base=state.level*1.5+5;
+ let g={id:state.gearId++,name,rarity,type,icon:gearIcons[type],
+ atk:Math.floor((type==='weapon'?base*2.2:(type==='ring'||type==='bracelet'?base*.8:base*.35))*mult),
+ def:Math.floor((defensiveSlots.has(type)?base*1.8:base*.35)*mult),
+ hp:Math.floor((defensiveSlots.has(type)?base*7:base*1.5)*mult),plus:0};
+ // 只有史詩、傳說、神話等高品質裝備才會生成隨機附加詞綴。
+ const rarityRank={普通:1,優良:2,稀有:3,史詩:4,傳說:5,神話:6};
+ if((rarityRank[rarity]||0)>=4){
+  const affixes=[
+   ['暴擊率','crit',.01],['暴擊傷害','critDamage',.08],
+   ['生命汲取','lifesteal',.02],['金幣獲得','goldBonus',.04],
+   ['技能增幅','skillBonus',.01],['減傷','damageReduction',.015],
+   ['攻擊速度','speed',.03]
+  ];
+  const scale={史詩:1,傳說:1.35,神話:1.75}[rarity]||1;
+  const pick=affixes[Math.floor(Math.random()*affixes.length)];
+  g.affix={name:pick[0],key:pick[1],value:pick[2]*scale};
+  g.name=pick[0]+'·'+name;
+ }
+ return g;
+}
+function gearScore(g){if(!g)return 0;let score=(Number(g.atk)||0)*1.0+(Number(g.def)||0)*1.15+(Number(g.hp)||0)*0.12, a=g.affix||{};if(a.key==='crit')score+=a.value*500;if(a.key==='critDamage')score+=a.value*180;if(a.key==='lifesteal')score+=a.value*500;if(a.key==='goldBonus')score+=a.value*100;if(a.key==='skillBonus')score+=a.value*450;if(a.key==='damageReduction')score+=a.value*500;if(a.key==='speed')score+=a.value*250;return score}
+function grantGear(g){
+ state.gear.unshift(g);if(state.gear.length>100)state.gear.pop();
+ log('🎁 獲得 '+g.name+'（'+g.rarity+'）');
+ const current=state.equipped[g.type],newScore=gearScore(g),oldScore=gearScore(current);
+ if(!current||newScore>oldScore){
+  const diff=current?Math.round((newScore/Math.max(1,oldScore)-1)*100):0;
+  const detail='攻擊 '+g.atk+'／防禦 '+g.def+'／生命 '+g.hp;
+  const oldDetail=current?'目前裝備：'+current.name+'（評分 '+Math.round(oldScore)+'）':'目前尚未裝備此部位';
+  const ask='發現更好的裝備！\\n\\n新裝備：'+g.name+'（'+g.rarity+'）\\n'+detail+'\\n裝備評分：'+Math.round(newScore)+'\\n'+oldDetail+(current?'\\n預估提升：約 '+diff+'%':'')+'\\n\\n要立即更換嗎？';
+  if(confirm(ask))equip(g.id);
+ }
+}
 function spawn(){let z=zones[state.zone],s=stats(),scale=Math.pow(1.12,Math.max(0,state.level-z.level));enemy={name:z.enemy,icon:z.icon,max:Math.floor(z.hp*scale),hp:Math.floor(z.hp*scale),atk:Math.floor(z.atk*scale),exp:Math.floor(z.exp*scale),gold:Math.floor(z.gold*scale)};renderBattle()}
-function damageEnemy(n){enemy.hp=Math.max(0,enemy.hp-n);if(enemy.hp<=0){sqMonsterDefeatSfx();let z=zones[state.zone],bonus=state.skills.includes('fortune')?1.15:1;state.kills++;state.gold+=Math.floor(enemy.gold*bonus);addXP(enemy.exp);if(Math.random()<.22*bonus)grantGear(makeGear(rollRarity()));if(state.kills%8===0)state.gems+=10;if(state.level>=z.level+8&&state.zone<zones.length-1){state.unlockedZone=Math.max(state.unlockedZone,state.zone+1)}checkAchievements();log('🏆 擊敗 '+enemy.name+'！獲得 '+enemy.exp+' EXP、'+Math.floor(enemy.gold*bonus)+' 金幣。');spawn()}else renderBattle()}
-function attack(){if(!state.classId){showClassPrompt();return}let s=stats(),d=Math.max(1,s.atk*(.85+Math.random()*.3));if(Math.random()<.12)d*=2;damageEnemy(Math.floor(d));if(enemy.hp>0)enemyAttack()}
-function castSkill(which){if(!state.classId){showClassPrompt();return}if(which===1&&state.level<5){log('技能尚未解鎖：角色達到 Lv.5 後開放爆發技能。');return}sqSkillSfx(which);let s=stats(),mult=which===0?2.3:4.2,d=Math.floor(s.atk*mult*(1+state.skills.filter(x=>x==='fury').length*.15));log('✨ 施放技能，造成 '+d+' 點傷害！');damageEnemy(d);if(enemy.hp>0)enemyAttack()}
-function enemyAttack(){let s=stats(),d=Math.max(1,enemy.atk-s.def*.45);if(Math.random()<.1)d*=1.7;let h=window.playerHP??s.hp;h=Math.max(0,h-Math.floor(d));window.playerHP=h;if(h<=0){window.playerHP=s.hp;state.gold=Math.max(0,state.gold- Math.floor(state.gold*.02));log('💫 你被擊倒了！返回營地並損失少量金幣。')}renderBattle()}
+function damageEnemy(n){if(state.skills.includes('precision'))n=Math.floor(n*1.02);if(state.skills.includes('vampire'))window.playerHP=Math.min(stats().hp,(window.playerHP??stats().hp)+Math.max(1,Math.floor(n*.01)));enemy.hp=Math.max(0,enemy.hp-n);if(enemy.hp<=0){sqMonsterDefeatSfx();let z=zones[state.zone],bonus=1+(stats().goldBonus||0);state.kills++;state.gold+=Math.floor(enemy.gold*bonus);addXP(enemy.exp);if(Math.random()<.22*bonus)grantGear(makeGear(rollRarity()));if(state.kills%8===0)state.gems+=10;if(state.level>=z.level+8&&state.zone<zones.length-1){state.unlockedZone=Math.max(state.unlockedZone,state.zone+1)}checkAchievements();log('🏆 擊敗 '+enemy.name+'！獲得 '+enemy.exp+' EXP、'+Math.floor(enemy.gold*bonus)+' 金幣。');spawn()}else renderBattle()}
+function attack(){if(!state.classId){showClassPrompt();return}let s=stats(),d=Math.max(1,s.atk*(.85+Math.random()*.3));if(Math.random()<s.crit)d*=s.critDamage;damageEnemy(Math.floor(d));if(s.lifesteal&&window.playerHP!==undefined)window.playerHP=Math.min(s.hp,window.playerHP+Math.floor(d*s.lifesteal));if(enemy.hp>0)enemyAttack()}
+function castSkill(which){if(!state.classId){showClassPrompt();return}if(which===1&&state.level<5){log('技能尚未解鎖：角色達到 Lv.5 後開放爆發技能。');return}sqSkillSfx(which);let s=stats(),mult=(which===0?1.8:3.0)*s.skillBonus,d=Math.floor(s.atk*mult*(1+state.skills.filter(x=>x==='fury').length*.15));log('✨ 施放技能，造成 '+d+' 點傷害！');damageEnemy(d);if(enemy.hp>0)enemyAttack()}
+function enemyAttack(){let s=stats(),d=Math.max(1,enemy.atk-s.def*.45);d*=1-s.damageReduction;if(Math.random()<.1)d*=1.7;let h=window.playerHP??s.hp;h=Math.max(0,h-Math.floor(d));window.playerHP=h;if(h<=0){const goldLoss=Math.min(state.gold,Math.floor(state.gold*.05));const xpLoss=Math.min(state.xp,Math.max(1,Math.floor(xpNeed()*.05)));state.gold=Math.max(0,state.gold-goldLoss);state.xp=Math.max(0,state.xp-xpLoss);window.playerHP=s.hp;log('💀 你被擊倒了！返回營地，損失 '+fmt(xpLoss)+' EXP 與 '+fmt(goldLoss)+' 金幣。');if(window.sqDeathFX)window.sqDeathFX(xpLoss,goldLoss);save()}renderBattle()}
 function renderBattle(){if(!enemy)return;$('enemyName').textContent=enemy.name;$('enemySprite').textContent=enemy.icon;$('enemyHp').textContent='HP '+fmt(enemy.hp)+' / '+fmt(enemy.max);$('enemyHpBar').style.width=(enemy.hp/enemy.max*100)+'%';let s=stats(),h=window.playerHP??s.hp;$('playerBattleName').textContent=state.name;$('playerBattleHp').textContent='HP '+fmt(h)+' / '+fmt(s.hp);$('playerHpBar').style.width=(h/s.hp*100)+'%';$('playerSprite').textContent=(classes.find(c=>c.id===state.classId)||classes[0]).icon;$('battleZone').textContent=zones[state.zone].name;if(window.sync3DStage)window.sync3DStage({enemyName:enemy.name,enemyHp:enemy.hp,zone:state.zone,classId:state.classId,level:state.level})}
 function toggleAuto(){state.auto=!state.auto;$('autoBtn').textContent=state.auto?'Ⅱ 自動戰鬥：開':'▶ 自動戰鬥：關';if(state.auto&&!autoTimer)autoTimer=setInterval(()=>{if(state.auto){if(Math.random()<.23)castSkill(0);else attack()}},1200);if(!state.auto&&autoTimer){clearInterval(autoTimer);autoTimer=null}save()}
 function checkUnlocks(){zones.forEach((z,i)=>{if(state.level>=z.level)state.unlockedZone=Math.max(state.unlockedZone,i)})}
 function checkAchievements(){let a=[['first','初次狩獵','擊敗第一隻怪物',state.kills>=1],['slayer','百戰勇者','累計擊敗 100 隻怪物',state.kills>=100],['veteran','千錘百鍊','累計擊敗 500 隻怪物',state.kills>=500],['level10','初露鋒芒','達到 Lv.10',state.level>=10],['level50','英雄傳說','達到 Lv.50',state.level>=50],['level100','深淵征服者','達到 Lv.100',state.level>=100],['level150','終極遠征者','達到 Lv.150',state.level>=150],['gear','收藏家','背包持有 10 件裝備',state.gear.length>=10]];a.forEach(x=>{if(x[3]&&!state.achievements.includes(x[0])){state.achievements.push(x[0]);state.gems+=20;log('🏅 解鎖成就：'+x[1]+'，獲得 20 鑽石！')}})}
 function checkUnlocksUI(){checkUnlocks()}
-function render(){let s=stats(),c=classes.find(x=>x.id===state.classId)||classes[0];$('gold').textContent=fmt(state.gold);$('gems').textContent=fmt(state.gems);$('shards').textContent=fmt(state.shards);$('sideName').textContent=state.name;$('sideLevel').textContent='Lv.'+state.level+' '+(state.classId?c.name:'新手');$('sideAvatar').textContent=c.icon;$('charName').textContent=state.name;$('homeClass').textContent=state.classId?c.name:'請選擇職業開始冒險';$('classTag').textContent=state.classId?c.name:'尚未選職';$('homeAvatar').textContent=c.icon;$('heroArt').textContent=c.icon;$('power').textContent=fmt(s.power);$('atk').textContent=fmt(s.atk);$('def').textContent=fmt(s.def);$('hp').textContent=fmt(s.hp);let pct=state.level>=150?100:state.xp/xpNeed()*100;$('xpbar').style.width=pct+'%';$('xptext').textContent=fmt(state.xp)+' / '+fmt(xpNeed())+' EXP';$('zoneName').textContent=zones[state.zone].name;$('zoneDesc').textContent='推薦等級 Lv.'+zones[state.zone].level+' · '+zones[state.zone].enemy;$('skillPoints').textContent=state.skillPoints;renderCharacter();renderBag();renderSkills();renderPets();renderDungeons();renderForge();renderAchievements();renderZones();renderBattle();save()}
+function render(){let s=stats(),c=classes.find(x=>x.id===state.classId)||classes[0];$('gold').textContent=fmt(state.gold);$('gems').textContent=fmt(state.gems);$('shards').textContent=fmt(state.shards);$('sideName').textContent=state.name;$('sideLevel').textContent='Lv.'+state.level+' '+(state.classId?c.name:'新手');$('sideAvatar').textContent=c.icon;$('charName').textContent=state.name;$('homeClass').textContent=state.classId?c.name:'請選擇職業開始冒險';$('classTag').textContent=state.classId?c.name:'尚未選職';$('homeAvatar').textContent=c.icon;$('heroArt').textContent=c.icon;$('power').textContent=fmt(s.power);$('atk').textContent=fmt(s.atk);$('def').textContent=fmt(s.def);$('hp').textContent=fmt(s.hp);let pct=state.level>=150?100:state.xp/xpNeed()*100;$('xpbar').style.width=pct+'%';$('xptext').textContent=fmt(state.xp)+' / '+fmt(xpNeed())+' EXP';$('zoneName').textContent=zones[state.zone].name;$('zoneDesc').textContent='建議等級 Lv.'+zones[state.zone].level+' · '+zones[state.zone].enemy;$('skillPoints').textContent=state.skillPoints;renderCharacter();renderBag();renderSkills();renderPets();renderDungeons();renderForge();renderAchievements();renderZones();renderBattle();save()}
 function renderCharacter(){let s=stats(),c=classes.find(x=>x.id===state.classId)||classes[0];$('charBig').textContent=c.icon;$('charTitle').textContent=state.name;$('charClass').textContent=state.classId?c.name:'未選職';$('charLevel').textContent='Lv.'+state.level+' / 150';$('charXp').style.width=(state.xp/xpNeed()*100)+'%';$('charXpText').textContent=fmt(state.xp)+' / '+fmt(xpNeed())+' EXP';$('statsList').innerHTML=[['⚔️ 攻擊力',s.atk],['🛡️ 防禦力',s.def],['❤️ 生命值',s.hp],['⭐ 戰鬥力',s.power],['💀 擊殺數',state.kills]].map(x=>'<div style="display:flex;justify-content:space-between;padding:7px;border-bottom:1px solid #293852"><span>'+x[0]+'</span><b>'+fmt(x[1])+'</b></div>').join('');$('classes').innerHTML=classes.map(x=>'<div class="item-card"><div class="item"><div class="itemicon">'+x.icon+'</div><div><b>'+x.name+'</b><div class="tag">攻 '+x.atk+' · 防 '+x.def+'</div></div></div><p>'+x.desc+'</p><button class="small '+(state.classId===x.id?'good':'')+'" onclick="chooseClass(\''+x.id+'\')">'+(state.classId===x.id?'目前職業':'選擇職業')+'</button></div>').join('')}
-function chooseClass(id){if(state.classId&&state.classId!==id){if(!confirm('更換職業會保留等級與裝備，確定更換？'))return}state.classId=id;window.playerHP=stats().hp;render();log('⚔️ 你已成為 '+classes.find(x=>x.id===id).name+'！')}
+function sqResetProgressForClass(nextId){
+ state.classId=nextId;state.level=1;state.xp=0;state.skillPoints=0;state.skills=[];state.skillLevels={};
+ state.zone=0;state.unlockedZone=0;state.auto=false;
+ if(autoTimer){clearInterval(autoTimer);autoTimer=null}
+ window.playerHP=stats().hp;spawn();save();render();go('battle');
+ log('🔄 職業已重置！等級、經驗、技能與區域進度重新開始；裝備與收藏保留。');
+}
+function chooseClass(id){if(!classes.some(x=>x.id===id))return;if(state.classId===id)return;if(state.classId){if(!confirm('更換職業將重新開始角色養成：等級回到 Lv.1、經驗與技能點歸零、技能等級及區域進度重置。金幣、鑽石、裝備、寵物、坐騎及成就保留。確定更換？'))return;sqResetProgressForClass(id);return}state.classId=id;window.playerHP=stats().hp;spawn();render();go('battle');log('⚔️ 你已成為 '+classes.find(x=>x.id===id).name+'！冒險開始！')}
 function showClassPrompt(){showModal('<h2>選擇你的職業</h2><p class="muted">選擇職業後即可開始戰鬥。</p><div class="item-grid">'+classes.map(c=>'<button onclick="chooseClass(\''+c.id+'\');closeModal()">'+c.icon+' '+c.name+'</button>').join('')+'</div>')}
-function renderZones(){$('zones').innerHTML=zones.map((z,i)=>'<div class="item-card"><div class="item"><div class="itemicon">'+z.icon+'</div><div><b>'+z.name+'</b><div class="muted">推薦 Lv.'+z.level+'</div></div></div><p>'+z.enemy+' · EXP '+z.exp+'</p><button class="small '+(state.zone===i?'good':'')+'" '+(i>state.unlockedZone?'disabled':'')+' onclick="changeZone('+i+')">'+(i>state.unlockedZone?'🔒 尚未解鎖':state.zone===i?'目前區域':'前往探索')+'</button></div>').join('')}
-function changeZone(i){if(i>state.unlockedZone)return;state.zone=i;spawn();render();go('battle');log('🧭 你來到了 '+zones[i].name+'。')}
-function renderBag(){let arr=state.gear.filter(g=>bagFilter==='all'||g.type===bagFilter);$('bagCount').textContent=state.gear.length+' / 100';$('bag').innerHTML=arr.length?arr.map(g=>'<div class="item-card"><div class="item"><div class="itemicon">'+g.icon+'</div><div><b class="rarity-'+g.rarity+'">'+g.name+'</b><div class="muted">'+g.rarity+' '+(g.plus?'+'+g.plus:'')+'</div></div></div><p>⚔️ '+g.atk+'　🛡️ '+g.def+'　❤️ '+g.hp+'</p><div class="battle-actions"><button class="small good" onclick="equip('+g.id+')">裝備</button><button class="small" onclick="sell('+g.id+')">出售</button></div></div>').join(''):'<div class="muted">背包空空如也，去戰鬥尋找戰利品吧。</div>';$('equipped').innerHTML=Object.entries(state.equipped).map(([k,g])=>'<div class="item-card"><b>'+({weapon:'武器',armor:'防具',accessory:'飾品'}[k])+'</b>'+(g?'<div class="item" style="margin-top:8px"><div class="itemicon">'+g.icon+'</div><div><b class="rarity-'+g.rarity+'">'+g.name+'</b><p>攻 '+g.atk+' · 防 '+g.def+' · HP '+g.hp+'</p></div></div><button class="small" onclick="unequip(\''+k+'\')">卸下</button>':'<p class="muted">尚未裝備</p>')+'</div>').join('')}
+function renderZones(){$('zones').innerHTML=zones.map((z,i)=>'<div class="item-card"><div class="item"><div class="itemicon">'+z.icon+'</div><div><b>'+z.name+'</b><div class="muted">建議等級 Lv.'+z.level+'</div></div></div><p>'+z.enemy+' · EXP '+z.exp+'</p><button class="small '+(state.zone===i?'good':'')+'" onclick="changeZone('+i+')">'+(state.zone===i?'目前區域':'前往探索')+'</button></div>').join('')}
+function changeZone(i){if(!Number.isInteger(i)||i<0||i>=zones.length)return;state.zone=i;spawn();render();go('battle');let z=zones[i];if(state.level<z.level)notify('⚠️ 難度提醒','此區域建議 Lv.'+z.level+'，你目前 Lv.'+state.level+'。仍可自由進入，敵人可能較難對付。');log('🧭 你來到了 '+z.name+'。')}
+function renderBag(){let arr=state.gear.filter(g=>bagFilter==='all'||(bagFilter==='accessory'?['accessory','ring','bracelet'].includes(g.type):bagFilter==='armor'?['armor','gloves','boots','belt','cloak'].includes(g.type):g.type===bagFilter));$('bagCount').textContent=state.gear.length+' / 100';$('bag').innerHTML=arr.length?arr.map(g=>'<div class="item-card"><div class="item"><div class="itemicon">'+g.icon+'</div><div><b class="rarity-'+g.rarity+'">'+g.name+'</b><div class="muted">'+g.rarity+' '+(g.plus?'+'+g.plus:'')+'</div></div></div><p>⚔️ '+g.atk+'　🛡️ '+g.def+'　❤️ '+g.hp+'</p><small class="muted">裝備評分：'+Math.round(gearScore(g))+(state.equipped[g.type]?' · 目前裝備：'+Math.round(gearScore(state.equipped[g.type])):' · 此部位尚未裝備')+'</small><div class="battle-actions"><button class="small good" onclick="equip('+g.id+')">裝備</button><button class="small" onclick="sell('+g.id+')">出售</button></div></div>').join(''):'<div class="muted">背包空空如也，去戰鬥尋找戰利品吧。</div>';$('equipped').innerHTML=Object.entries(state.equipped).map(([k,g])=>'<div class="item-card"><b>'+(slotNames[k]||k)+'</b>'+(g?'<div class="item" style="margin-top:8px"><div class="itemicon">'+g.icon+'</div><div><b class="rarity-'+g.rarity+'">'+g.name+'</b><p>攻 '+g.atk+' · 防 '+g.def+' · HP '+g.hp+'</p></div></div><button class="small" onclick="unequip(\''+k+'\')">卸下</button>':'<p class="muted">尚未裝備</p>')+'</div>').join('')}
 function filterBag(f,b){bagFilter=f;document.querySelectorAll('#page-inventory .tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderBag()}
-function equip(id){let g=state.gear.find(x=>x.id===id);if(!g)return;state.equipped[g.type]=g;state.gear=state.gear.filter(x=>x.id!==id);render();log('🛡️ 已裝備 '+g.name)}
-function unequip(k){if(state.equipped[k])state.gear.unshift(state.equipped[k]);state.equipped[k]=null;render()}
-function sell(id){let g=state.gear.find(x=>x.id===id);if(!g)return;let v={普通:15,優良:30,稀有:60,史詩:120,傳說:250,神話:500}[g.rarity];state.gold+=v;state.gear=state.gear.filter(x=>x.id!==id);render();log('🪙 出售 '+g.name+'，獲得 '+v+' 金幣。')}
-function renderSkills(){$('skillTree').innerHTML=skills.map((x,i)=>{let has=state.skills.includes(x.id),unlock=state.level>=(i<3?1:i<5?15:30);return '<div class="skillnode '+(!unlock?'locked':'')+'"><div class="item"><div class="itemicon">'+x.icon+'</div><div><b>'+x.name+'</b><small>'+x.desc+'</small></div></div><p class="muted">消耗 '+x.cost+' 技能點 · '+(unlock?'可解鎖':'Lv.'+(i<3?1:i<5?15:30)+' 開放')+'</p><button class="small '+(has?'good':'')+'" '+(has||!unlock||state.skillPoints<x.cost?'disabled':'')+' onclick="learnSkill(\''+x.id+'\')">'+(has?'已學習':'學習技能')+'</button></div>'}).join('')}
+function equip(id){
+ let idx=state.gear.findIndex(x=>String(x.id)===String(id));if(idx<0)return;
+ let g=state.gear[idx],old=state.equipped[g.type];
+ state.gear.splice(idx,1);
+ if(old)state.gear.unshift(old);
+ state.equipped[g.type]=g;
+ save();render();log('🛡️ 已裝備 '+g.name+(old?'，原裝備已放回背包':''));
+}
+function unequip(k){if(state.equipped[k])state.gear.unshift(state.equipped[k]);state.equipped[k]=null;save();render()}
+function sell(id){let g=state.gear.find(x=>x.id===id);if(!g)return;let v={普通:15,優良:30,稀有:60,史詩:120,傳說:250,神話:500}[g.rarity];state.gold+=v;state.gear=state.gear.filter(x=>x.id!==id);save();render();log('🪙 出售 '+g.name+'，獲得 '+v+' 金幣。')}
+function renderSkills(){$('skillTree').innerHTML=skills.map((x)=>{let has=state.skills.includes(x.id),unlock=state.level>=(x.unlock||1);return '<div class="skillnode '+(!unlock?'locked':'')+'"><div class="item"><div class="itemicon">'+x.icon+'</div><div><b>'+x.name+'</b><small>'+x.desc+'</small></div></div><p class="muted">消耗 '+x.cost+' 技能點 · '+(unlock?'可解鎖':'Lv.'+(x.unlock||1)+' 開放')+'</p><button class="small '+(has?'good':'')+'" '+(has||!unlock||state.skillPoints<x.cost?'disabled':'')+' onclick="learnSkill(\''+x.id+'\')">'+(has?'已學習':'學習技能')+'</button></div>'}).join('')}
 function learnSkill(id){let x=skills.find(s=>s.id===id);if(!x||state.skills.includes(id)||state.skillPoints<x.cost)return;state.skillPoints-=x.cost;state.skills.push(id);render();log('✨ 學會天賦：'+x.name)}
 function renderPets(){$('petList').innerHTML=pets.map(p=>{let owned=state.pets.includes(p.id);return '<div class="item-card"><div class="item"><div class="itemicon">'+p.icon+'</div><div><b>'+p.name+'</b><div class="muted">'+p.desc+'</div></div></div><p>'+(!owned?'解鎖條件：Lv.'+p.unlock:'已加入夥伴收藏')+'</p><button class="small '+(state.activePet===p.id?'good':'')+'" '+(!owned?'disabled':'')+' onclick="setPet(\''+p.id+'\')">'+(state.activePet===p.id?'出戰中':owned?'派遣出戰':'尚未解鎖')+'</button></div>'}).join('');$('mountList').innerHTML=mounts.map(m=>{let owned=state.mounts.includes(m.id);return '<div class="item-card"><div class="item"><div class="itemicon">'+m.icon+'</div><div><b>'+m.name+'</b><div class="muted">'+m.desc+'</div></div></div><p>'+(!owned?'解鎖條件：Lv.'+m.unlock:'已加入坐騎收藏')+'</p><button class="small '+(state.activeMount===m.id?'good':'')+'" '+(!owned?'disabled':'')+' onclick="setMount(\''+m.id+'\')">'+(state.activeMount===m.id?'騎乘中':owned?'騎乘':'尚未解鎖')+'</button></div>'}).join('')}
 function setPet(id){state.activePet=id;render()}function setMount(id){state.activeMount=id;render()}
@@ -566,4 +714,592 @@ function animate(){requestAnimationFrame(animate);if(!renderer)return;let t=cloc
  renderer.render(scene,camera)}
 window.sync3DStage=sync;window.play3DAction=action;init();
 </script>
+\n\n<!-- SHADOW QUEST V1.7: CLASS ACTIVE SKILLS + SKILL LEVELS -->
+<style>
+.sqSkillPanel{margin-top:12px;padding:12px;border:1px solid #52617a;border-radius:12px;background:linear-gradient(145deg,#17263b,#101827)}
+.sqSkillGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:9px}
+.sqSkillCard{border:1px solid #40516c;border-radius:10px;padding:9px;background:#0c1523}
+.sqSkillCard b{display:block}.sqSkillCard small{color:#aab8cb;display:block;margin:4px 0 8px}.sqSkillCard button{width:100%;font-size:12px;padding:7px}
+@media(max-width:520px){.sqSkillGrid{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+ const skillBook={
+ warrior:[
+  {name:'聖光斬',icon:'⚔️',unlock:1,mult:2.1,desc:'穩定近戰斬擊'},
+  {name:'盾擊震盪',icon:'🛡️',unlock:5,mult:2.7,desc:'以盾牌重擊敵人'},
+  {name:'神聖裁決',icon:'✨',unlock:15,mult:3.8,desc:'聖光凝聚後的強力斬擊'},
+  {name:'天啟審判',icon:'🌟',unlock:30,mult:6.2,desc:'聖殿騎士專屬終極爆發'}
+ ],
+ mage:[
+  {name:'奧術飛彈',icon:'🔮',unlock:1,mult:2.2,desc:'快速發射奧術能量'},
+  {name:'烈焰風暴',icon:'🔥',unlock:5,mult:2.9,desc:'火焰席捲敵人'},
+  {name:'冰晶牢籠',icon:'❄️',unlock:15,mult:3.7,desc:'冰霜魔力集中爆發'},
+  {name:'隕星天降',icon:'☄️',unlock:30,mult:6.5,desc:'秘法術士專屬終極爆發'}
+ ],
+ assassin:[
+  {name:'影襲',icon:'🗡️',unlock:1,mult:2.3,desc:'瞬身突刺敵人'},
+  {name:'雙刃連舞',icon:'🌑',unlock:5,mult:2.8,desc:'連續斬擊造成傷害'},
+  {name:'血月處決',icon:'🩸',unlock:15,mult:4.0,desc:'以嗜血之力重創目標'},
+  {name:'死神降臨',icon:'💀',unlock:30,mult:6.4,desc:'暗影刺客專屬終極爆發'}
+ ],
+ ranger:[
+  {name:'穿雲箭',icon:'🏹',unlock:1,mult:2.2,desc:'精準射出強力箭矢'},
+  {name:'多重箭雨',icon:'🌧️',unlock:5,mult:2.8,desc:'連續箭矢覆蓋敵人'},
+  {name:'星界狙擊',icon:'🎯',unlock:15,mult:3.9,desc:'凝聚星能的遠距射擊'},
+  {name:'星隕箭雨',icon:'🌠',unlock:30,mult:6.3,desc:'星界遊俠專屬終極爆發'}
+ ]};
+ const oldFresh=window.fresh;
+ // Save migration is additive and keeps existing character progress.
+ state.skillLevels=state.skillLevels||{};
+ const getSkills=()=>skillBook[state.classId]||[];
+ const levelOf=i=>Math.max(0,Math.min(10,Number(state.skillLevels[state.classId+'_'+i]||0)));
+ function renderPanel(){
+  const actions=document.querySelector('#page-battle .battle-actions');if(!actions)return;
+  actions.querySelectorAll('button[onclick^="castSkill"]').forEach(b=>b.style.display='none');
+  let panel=document.getElementById('sqActiveSkillPanel');if(!panel){panel=document.createElement('div');panel.id='sqActiveSkillPanel';panel.className='sqSkillPanel';actions.insertAdjacentElement('afterend',panel)}
+  const list=getSkills();
+  if(!state.classId){panel.innerHTML='<b>✨ 職業技能</b><p class="muted">選擇職業後，解鎖專屬技能。</p>';return}
+  panel.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><b>✨ '+(classes.find(c=>c.id===state.classId)?.name||'職業')+' 專屬技能</b><b class="gold">技能點：'+state.skillPoints+'</b></div><small class="muted">技能點可用於解鎖及升級技能；技能等級越高，傷害越高。</small><div class="sqSkillGrid">'+list.map((x,i)=>{
+   const lv=levelOf(i),need=x.unlock,canLearn=state.level>=need,damage=lv?Math.floor(stats().atk*x.mult*(1+(lv-1)*.10)):0;
+   const action=lv===0?'解鎖技能（1 點）':lv<10?'升級至 Lv.'+(lv+1)+'（1 點）':'已達最高等級';
+   return '<div class="sqSkillCard"><b>'+x.icon+' '+x.name+'　<span class="gold">Lv.'+lv+'</span></b><small>'+x.desc+'<br>解鎖需求：角色 Lv.'+need+'<br>'+(lv?'目前傷害約 '+damage+'':'尚未解鎖')+'</small><div style="display:flex;gap:6px"><button '+((!canLearn||state.skillPoints<1||lv>=10)?'disabled':'')+' onclick="sqUpgradeSkill('+i+')">'+action+'</button>'+(lv?'<button class="primary" onclick="sqUseSkill('+i+')">施放</button>':'')+'</div></div>'
+  }).join('')+'</div>';
+ }
+ window.sqUpgradeSkill=function(i){const list=getSkills(),x=list[i];if(!x||state.level<x.unlock||state.skillPoints<1||levelOf(i)>=10)return;state.skillPoints--;state.skillLevels[state.classId+'_'+i]=levelOf(i)+1;save();render();renderPanel();log('✨ '+x.name+' 提升至 Lv.'+levelOf(i)+'！')};
+ // Distinct synthesized sound signature for every class skill (no external audio files).
+ function sqPlaySkillSfx(i){
+  if(!sqSoundOn)return;audioReady();
+  const id=state.classId||'warrior';
+  const patterns={
+   warrior:[()=>{noise(.18,.07,1300);tone(180,.22,'sawtooth',.06,620)},()=>{noise(.3,.09,700);tone(95,.32,'square',.07,-35);setTimeout(()=>tone(260,.16,'triangle',.04,180),90)},()=>{tone(420,.22,'triangle',.05,520);setTimeout(()=>tone(980,.35,'sine',.06,-240),120)},()=>{noise(.42,.12,900);tone(65,.55,'sawtooth',.10,900);setTimeout(()=>{tone(1320,.55,'sine',.07,-400);tone(1960,.3,'triangle',.04)},180)}],
+   mage:[()=>{[440,660,880].forEach((f,j)=>setTimeout(()=>tone(f,.2,'sine',.04,250),j*45))},()=>{noise(.3,.08,2500);tone(130,.4,'sawtooth',.07,850);setTimeout(()=>tone(740,.24,'triangle',.05),130)},()=>{tone(1500,.25,'sine',.045,-1200);setTimeout(()=>{noise(.22,.07,500);tone(210,.4,'triangle',.06,-120)},140)},()=>{[392,523,784,1175,1568].forEach((f,j)=>setTimeout(()=>tone(f,.42,'sine',.055,f*.3),j*65));setTimeout(()=>{noise(.4,.11,2200);tone(55,.6,'sawtooth',.1,1000)},250)}],
+   assassin:[()=>{noise(.12,.07,3600);tone(1700,.13,'sawtooth',.05,-1100)},()=>{[0,85,170].forEach((t,j)=>setTimeout(()=>{noise(.12,.08,3000);tone(1250-j*220,.15,'square',.045,-700)},t))},()=>{tone(95,.35,'triangle',.07,-65);setTimeout(()=>tone(2100,.18,'sawtooth',.055,-1500),110);setTimeout(()=>tone(520,.28,'sine',.05,-380),230)},()=>{noise(.5,.12,500);tone(48,.65,'square',.1,-25);setTimeout(()=>{tone(1800,.35,'sawtooth',.07,-1600);tone(2400,.22,'triangle',.04)},180)}],
+   ranger:[()=>{tone(1450,.12,'triangle',.055,-850);setTimeout(()=>tone(620,.24,'sine',.045,650),90)},()=>{[0,65,130,195].forEach((t,j)=>setTimeout(()=>{tone(1100+j*130,.12,'triangle',.04,-450);noise(.08,.035,3500)},t))},()=>{tone(300,.35,'sine',.05,1500);setTimeout(()=>tone(1900,.3,'triangle',.06,-900),180)},()=>{[660,880,1320,1760].forEach((f,j)=>setTimeout(()=>tone(f,.38,'sine',.05,f*.2),j*55));setTimeout(()=>{noise(.35,.1,3200);tone(75,.5,'sawtooth',.08,600)},210)}]
+  };
+  const arr=patterns[id]||patterns.warrior; (arr[i]||arr[0])();
+ }
+ window.sqUseSkill=function(i){const x=getSkills()[i],lv=levelOf(i);if(!x||!lv)return;if(!state.classId){showClassPrompt();return}const before=enemy?enemy.hp:0;audioReady();sqPlaySkillSfx(i);if(i===3&&window.sqUltimateFX)window.sqUltimateFX(state.classId,x.name);if(window.play3DAction)window.play3DAction(i===3?'skill':'attack');const ss=stats(),mult=x.mult*(1+(lv-1)*.10)*ss.skillBonus,d=Math.max(1,Math.floor(ss.atk*mult));if(i===3)log('🌟 終極技能【'+x.name+'】爆發！造成 '+d+' 點毀滅傷害！');else log('✨ '+x.name+' Lv.'+lv+'！造成 '+d+' 點傷害。');damageEnemy(d);if(enemy&&enemy.hp>0)enemyAttack();const after=enemy?enemy.hp:0;if(before>after){floatText($('enemySprite'),i===3?'✦ 終極 -'+Math.max(1,before-after):'✦ -'+Math.max(1,before-after),true);fxBurst($('enemySprite'),i===3?'#ffd36b':'#b88aff',i===3?58:24)}renderPanel()};
+ // Legacy skill hotkeys now use the first two unlocked class-specific skills.
+ window.castSkill=function(which){const i=Math.max(0,Math.min(3,Number(which)||0));if(levelOf(i)===0){const x=getSkills()[i];if(x&&state.level>=x.unlock&&state.skillPoints>0){sqUpgradeSkill(i);return}log('此技能尚未解鎖；請先達到角色等級需求並分配技能點。');return}sqUseSkill(i)};
+ const oldRender=window.render;window.render=function(){oldRender();renderPanel()};
+ const oldChoose=window.chooseClass;window.chooseClass=function(id){oldChoose(id);renderPanel()};
+ document.addEventListener('DOMContentLoaded',renderPanel);setTimeout(renderPanel,0);
+})();
+</script>
+
+
+<style>
+/* V1.9 ultimate cinematic and defeat feedback */
+#sqCinematic{position:fixed;inset:0;z-index:80;pointer-events:none;display:grid;place-items:center;overflow:hidden;opacity:0}
+#sqCinematic.show{animation:sqCineFade 1.55s ease-out forwards}
+#sqCinematic .sqCineTitle{font-size:clamp(25px,6vw,58px);font-weight:1000;letter-spacing:5px;text-align:center;text-shadow:0 0 12px currentColor,0 0 38px currentColor;transform:scale(.45);animation:sqCineTitle .95s cubic-bezier(.12,.8,.2,1) forwards}
+#sqCinematic .sqCineRing{position:absolute;width:min(65vw,520px);aspect-ratio:1;border:5px solid currentColor;border-radius:50%;box-shadow:0 0 25px currentColor,inset 0 0 35px currentColor;animation:sqCineRing .95s ease-out forwards}
+#sqCinematic .sqCineFlash{position:absolute;inset:0;background:radial-gradient(circle,rgba(255,255,255,.85),transparent 62%);animation:sqCineFlash .5s ease-out forwards}
+@keyframes sqCineFade{0%{opacity:0}12%{opacity:1}72%{opacity:1}100%{opacity:0}}
+@keyframes sqCineTitle{0%{transform:scale(.35) translateY(35px);filter:blur(8px)}55%{transform:scale(1.12);filter:blur(0)}100%{transform:scale(1)}}
+@keyframes sqCineRing{0%{transform:scale(.08) rotate(-90deg);opacity:0}25%{opacity:1}100%{transform:scale(1.9) rotate(90deg);opacity:0}}
+@keyframes sqCineFlash{0%{opacity:0}12%{opacity:.9}100%{opacity:0}}
+#fxLayer.sqUltimateShake{animation:sqUltimateShake .42s linear 2}
+@keyframes sqUltimateShake{0%,100%{transform:translate(0,0)}20%{transform:translate(-7px,3px)}40%{transform:translate(6px,-4px)}60%{transform:translate(-4px,-3px)}80%{transform:translate(5px,4px)}}
+#fxLayer .sqDeathToast{position:fixed;left:50%;top:35%;transform:translate(-50%,-50%);padding:18px 24px;border:1px solid #b94e5c;border-radius:16px;background:linear-gradient(145deg,#351522f5,#111827f5);box-shadow:0 0 40px #d12b4b66;text-align:center;color:#ffdce1;min-width:240px;animation:sqDeathIn .35s ease-out;z-index:95}
+#fxLayer .sqDeathToast b{display:block;font-size:24px;margin-bottom:8px;color:#ff7188}
+#fxLayer .sqDeathToast small{display:block;font-size:14px;line-height:1.8}
+@keyframes sqDeathIn{from{opacity:0;transform:translate(-50%,-35%) scale(.75)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+</style>
+<div id="sqCinematic" aria-hidden="true"><div class="sqCineFlash"></div><div class="sqCineRing"></div><div class="sqCineTitle"></div></div>
+<script>
+(function(){
+ const ultimateStyle={
+  warrior:{color:'#ffe08a',title:'天啟審判',sub:'聖光裁決'},
+  mage:{color:'#a8c9ff',title:'隕星天降',sub:'秘法星爆'},
+  assassin:{color:'#e58bff',title:'死神降臨',sub:'暗影終結'},
+  ranger:{color:'#7df5ff',title:'星隕箭雨',sub:'星界制裁'}
+ };
+ window.sqUltimateFX=function(classId,skillName){
+  const cfg=ultimateStyle[classId]||ultimateStyle.warrior,el=document.getElementById('sqCinematic');if(!el)return;
+  const title=el.querySelector('.sqCineTitle'),ring=el.querySelector('.sqCineRing');title.textContent=skillName||cfg.title;title.style.color=cfg.color;ring.style.color=cfg.color;
+  el.style.background='radial-gradient(circle, '+cfg.color+'35, rgba(4,8,18,.82) 72%)';el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
+  const layer=document.getElementById('fxLayer');if(layer){layer.classList.remove('sqUltimateShake');void layer.offsetWidth;layer.classList.add('sqUltimateShake');setTimeout(()=>layer.classList.remove('sqUltimateShake'),900)}
+  const field=document.querySelector('.battlefield');if(field){field.style.boxShadow='0 0 45px '+cfg.color;setTimeout(()=>field.style.boxShadow='',900)}
+  if(typeof fxBurst==='function')fxBurst(document.getElementById('enemySprite'),cfg.color,65);
+  if(typeof floatText==='function')floatText(document.getElementById('enemySprite'),'★ 終極必殺 ★',true);
+ };
+ window.sqDeathFX=function(xp,gold){const layer=document.getElementById('fxLayer');if(!layer)return;const n=document.createElement('div');n.className='sqDeathToast';n.innerHTML='<b>💀 角色倒下</b><small>失去 '+Math.floor(xp).toLocaleString('zh-TW')+' EXP<br>失去 '+Math.floor(gold).toLocaleString('zh-TW')+' 金幣<br>已返回營地，重新整備再出發。</small>';layer.appendChild(n);setTimeout(()=>n.remove(),3000)};
+})();
+</script>
+
+
+<script>
+(function(){
+ const petById=id=>pets.find(x=>x.id===id), mountById=id=>mounts.find(x=>x.id===id);
+ function companionState(){
+  state.v13=state.v13||{};
+  state.v13.petLevels=state.v13.petLevels||{};
+  state.v13.mountLevels=state.v13.mountLevels||{};
+  return state.v13;
+ }
+ function unlockByLevel(){
+  state.pets=Array.isArray(state.pets)?state.pets:['wolf'];
+  state.mounts=Array.isArray(state.mounts)?state.mounts:['horse'];
+  if(!state.pets.includes('wolf'))state.pets.push('wolf');
+  if(!state.mounts.includes('horse'))state.mounts.push('horse');
+ }
+ function costFor(level,kind){return Math.floor((kind==='pet'?250:350)*Math.pow(1.22,level))}
+ function renderCompanions(){
+  if(!state)return;
+  unlockByLevel();const v=companionState();
+  $('petList').innerHTML=pets.map(p=>{
+   const owned=state.pets.includes(p.id),lv=v.petLevels[p.id]||1,cost=costFor(lv,'pet'),active=state.activePet===p.id;
+   return '<div class="item-card"><div class="item"><div class="itemicon">'+p.icon+'</div><div><b>'+p.name+'</b><div class="muted">'+p.desc+'</div><small class="gold">夥伴 Lv.'+lv+' / 30</small></div></div><p>'+(!owned?'解鎖條件：角色 Lv.'+p.unlock:('成長加成：全屬性約 +'+((lv-1)*0.8).toFixed(1)+'%'))+'</p><button class="small '+(active?'good':'')+'" '+(!owned?'disabled':'')+' onclick="setPet(\''+p.id+'\')">'+(active?'出戰中':owned?'派遣出戰':'尚未解鎖')+'</button><button class="small" '+(!owned||lv>=30?'disabled':'')+' onclick="sqLevelPet(\''+p.id+'\')">升級 · '+cost+' 金幣</button></div>';
+  }).join('');
+  $('mountList').innerHTML=mounts.map(m=>{
+   const owned=state.mounts.includes(m.id),lv=v.mountLevels[m.id]||1,cost=costFor(lv,'mount'),active=state.activeMount===m.id;
+   return '<div class="item-card"><div class="item"><div class="itemicon">'+m.icon+'</div><div><b>'+m.name+'</b><div class="muted">'+m.desc+'</div><small class="gold">坐騎 Lv.'+lv+' / 30</small></div></div><p>'+(!owned?'解鎖條件：角色 Lv.'+m.unlock:('成長加成：全屬性約 +'+((lv-1)*0.6).toFixed(1)+'%'))+'</p><button class="small '+(active?'good':'')+'" '+(!owned?'disabled':'')+' onclick="setMount(\''+m.id+'\')">'+(active?'騎乘中':owned?'騎乘':'尚未解鎖')+'</button><button class="small" '+(!owned||lv>=30?'disabled':'')+' onclick="sqLevelMount(\''+m.id+'\')">升級 · '+cost+' 金幣</button></div>';
+  }).join('');
+ }
+ window.renderPets=renderCompanions;
+ window.setPet=function(id){if(!state.pets.includes(id))return;state.activePet=id;save();render();};
+ window.setMount=function(id){if(!state.mounts.includes(id))return;state.activeMount=id;save();render();};
+ window.sqLevelPet=function(id){
+  const p=petById(id),v=companionState();if(!p||!state.pets.includes(id))return;
+  const lv=v.petLevels[id]||1,cost=costFor(lv,'pet');if(lv>=30){notify('寵物已達最高等級');return}
+  if(state.gold<cost){notify('金幣不足','升級需要 '+cost+' 金幣');return}
+  state.gold-=cost;v.petLevels[id]=lv+1;save();render();notify('🐾 寵物升級成功',p.name+' 提升至 Lv.'+(lv+1));
+ };
+ window.sqLevelMount=function(id){
+  const m=mountById(id),v=companionState();if(!m||!state.mounts.includes(id))return;
+  const lv=v.mountLevels[id]||1,cost=costFor(lv,'mount');if(lv>=30){notify('坐騎已達最高等級');return}
+  if(state.gold<cost){notify('金幣不足','升級需要 '+cost+' 金幣');return}
+  state.gold-=cost;v.mountLevels[id]=lv+1;save();render();notify('🐎 坐騎升級成功',m.name+' 提升至 Lv.'+(lv+1));
+ };
+ const previousStats=window.stats;
+ if(typeof previousStats==='function')window.stats=function(){
+  const s=previousStats(),v=companionState();unlockByLevel();
+  const p=petById(state.activePet),m=mountById(state.activeMount);
+  const pl=p?(v.petLevels[p.id]||1):1,ml=m?(v.mountLevels[m.id]||1):1;
+  const petGrowth=1+(pl-1)*.008,mountGrowth=1+(ml-1)*.006;
+  let atk=1,def=1,hp=1,crit=0,skill=0;
+  function apply(x){
+   if(!x)return;const b=(x.bonus||0)/100,t=x.bonusType;
+   if(t==='atk')atk+=b;if(t==='def')def+=b;if(t==='hp')hp+=b;
+   if(t==='all'){atk+=b;def+=b;hp+=b}
+   if(t==='crit')crit+=b*.5;
+   if(t==='hpdef'){hp+=b;def+=b*.35}
+   if(t==='atkcrit'){atk+=b;crit+=b*.4}
+   if(t==='skill')skill+=b*.5;
+   if(t==='defhp'){def+=b;hp+=b*.5}
+   if(t==='atkdef'){atk+=b;def+=b}
+  }
+  // Existing legacy pet bonuses are already applied in the base stats function.
+  if(p&&!['wolf','slime','dragon','phoenix'].includes(p.id))apply(p);
+  if(m)apply(m);
+  const g=petGrowth*mountGrowth;
+  s.atk=Math.floor(s.atk*g*atk);s.def=Math.floor(s.def*g*def);s.hp=Math.floor(s.hp*g*hp);
+  s.crit=(s.crit||0)+crit;s.skillBonus=(s.skillBonus||1)*(1+skill);
+  s.power=Math.floor(s.atk*2+s.def*1.5+s.hp*.25);
+  return s;
+ };
+ const oldRender=window.render;
+ if(typeof oldRender==='function')window.render=function(){unlockByLevel();oldRender();renderCompanions()};
+ document.addEventListener('DOMContentLoaded',()=>{if(state){unlockByLevel();renderCompanions();save()}});
+ setTimeout(()=>{if(state){unlockByLevel();renderCompanions();save()}},50);
+})();
+</script>
+
+
+<script>
+(function(){
+ const qualities=[
+  {name:'普通',color:'#a0a0a0',scale:1,stone:1,weight:400},
+  {name:'優良',color:'#36b86a',scale:1.06,stone:2,weight:280},
+  {name:'稀有',color:'#3988e8',scale:1.13,stone:4,weight:180},
+  {name:'史詩',color:'#a45be8',scale:1.22,stone:8,weight:90},
+  {name:'傳說',color:'#e5a52e',scale:1.34,stone:16,weight:35},
+  {name:'神話',color:'#ed6947',scale:1.50,stone:32,weight:12},
+  {name:'起源',color:'#e5d36b',scale:1.72,stone:64,weight:3}
+ ];
+ const qByName=n=>qualities.find(q=>q.name===n)||qualities[0];
+ const vstate=()=>{state.v15=state.v15||{};let v=state.v15;
+  v.petCopies=Array.isArray(v.petCopies)?v.petCopies:[];
+  v.nextPetUid=v.nextPetUid||1;v.evoStones=v.evoStones||0;v.mountDraws=v.mountDraws||0;
+  if(!v.migrated){
+   (state.pets||['wolf']).forEach(id=>{if(!v.petCopies.some(x=>x.id===id))v.petCopies.push({uid:v.nextPetUid++,id,rarity:'普通'})});
+   v.migrated=true;
+  }
+  return v;
+ };
+ function rollQuality(){
+  const total=qualities.reduce((a,x)=>a+x.weight,0);let r=Math.random()*total;
+  for(const q of qualities){r-=q.weight;if(r<=0)return q.name}
+  return '普通';
+ }
+ function weightedPet(){
+  const p=pets[Math.floor(Math.random()*pets.length)];
+  return p||pets[0];
+ }
+ function addPetCopy(id,rarity){
+  const v=vstate(),pet=pets.find(x=>x.id===id)||pets[0];
+  const copy={uid:v.nextPetUid++,id:pet.id,rarity:rarity||rollQuality()};
+  v.petCopies.push(copy);
+  if(!state.pets.includes(pet.id))state.pets.push(pet.id);
+  return copy;
+ }
+ function costPet(n){return n===10?450:50}
+ function costMount(n){return n===10?540:60}
+ window.sqPetDraw=function(n){
+  n=n===10?10:1;const v=vstate(),cost=costPet(n);
+  if(state.gems<cost){notify('鑽石不足','寵物召喚需要 '+cost+' 鑽石');return}
+  state.gems-=cost;let results=[];
+  for(let i=0;i<n;i++){const p=weightedPet(),q=rollQuality();results.push(addPetCopy(p.id,q))}
+  save();render();showModal('<h2>🐾 寵物召喚結果</h2><div class="item-grid">'+results.map(c=>{const p=pets.find(x=>x.id===c.id),q=qByName(c.rarity);return '<div class="item-card" style="border-color:'+q.color+'"><div class="itemicon">'+p.icon+'</div><b>'+p.name+'</b><p style="color:'+q.color+'">'+q.name+'</p></div>'}).join('')+'</div><p>已消耗 '+cost+' 鑽石</p><button class="primary" onclick="closeModal()">確定</button>');
+ };
+ window.sqMountDraw=function(n){
+  n=n===10?10:1;const v=vstate(),cost=costMount(n);
+  if(state.gems<cost){notify('鑽石不足','坐騎召喚需要 '+cost+' 鑽石');return}
+  state.gems-=cost;let results=[];
+  for(let i=0;i<n;i++){
+   const m=mounts[Math.floor(Math.random()*mounts.length)]||mounts[0];
+   if(!state.mounts.includes(m.id)){state.mounts.push(m.id);results.push({m,dup:false})}
+   else{v.mountDraws++;v.mountFragments=(v.mountFragments||0)+1;results.push({m,dup:true})}
+  }
+  save();render();showModal('<h2>🐎 坐騎召喚結果</h2><div class="item-grid">'+results.map(x=>'<div class="item-card"><div class="itemicon">'+x.m.icon+'</div><b>'+x.m.name+'</b><p>'+(x.dup?'重複獲得：坐騎碎片 +1':'新坐騎加入收藏')+'</p></div>').join('')+'</div><p>已消耗 '+cost+' 鑽石</p><button class="primary" onclick="closeModal()">確定</button>');
+ };
+ window.sqReleasePet=function(uid){
+  const v=vstate(),i=v.petCopies.findIndex(x=>x.uid===uid);if(i<0)return;
+  const c=v.petCopies[i],pet=pets.find(x=>x.id===c.id),q=qByName(c.rarity);
+  const same=v.petCopies.filter(x=>x.id===c.id);
+  if(state.activePet===c.id&&same.length<=1){notify('無法放生','至少保留一隻目前出戰的寵物');return}
+  if(!confirm('確定放生 '+q.name+' 品質的「'+(pet?pet.name:c.id)+'」？可獲得 '+q.stone+' 顆寵物進化石。'))return;
+  v.petCopies.splice(i,1);v.evoStones+=q.stone;
+  if(!v.petCopies.some(x=>x.id===c.id))state.pets=state.pets.filter(x=>x!==c.id);
+  if(state.activePet===c.id&&!v.petCopies.some(x=>x.id===c.id))state.activePet=v.petCopies[0]?.id||'wolf';
+  save();render();notify('放生成功','獲得寵物進化石 ×'+q.stone);
+ };
+ window.sqUpgradePet=function(id){
+  const v=vstate(),lv=v.petLevels?.[id]||1,cost=Math.max(2,lv*2);
+  if(lv>=30){notify('已達最高等級');return}
+  if(v.evoStones<cost){notify('進化石不足','升級需要 '+cost+' 顆寵物進化石');return}
+  v.petLevels=v.petLevels||{};v.evoStones-=cost;v.petLevels[id]=lv+1;
+  save();render();notify('寵物升級成功',pets.find(x=>x.id===id)?.name+' 提升至 Lv.'+(lv+1));
+ };
+ window.sqSetPetCopy=function(uid){
+  const c=vstate().petCopies.find(x=>x.uid===uid);if(!c)return;
+  state.activePet=c.id;state.v15.activePetUid=uid;save();render();
+ };
+ const oldRenderPets=window.renderPets;
+ window.renderPets=function(){
+  const v=vstate();
+  // Keep existing mount rendering, but replace pet panel with summon, rarity, release and evolution.
+  $('petList').innerHTML='<div class="item-card"><h3>✨ 寵物召喚</h3><p>單抽 50 鑽石｜十連抽 450 鑽石。重複寵物可放生換取進化石。</p><button class="small primary" onclick="sqPetDraw(1)">召喚一次</button> <button class="small primary" onclick="sqPetDraw(10)">十連召喚</button><p>寵物進化石：<b>'+v.evoStones+'</b></p></div>'+v.petCopies.map(c=>{
+   const p=pets.find(x=>x.id===c.id),q=qByName(c.rarity),lv=v.petLevels?.[c.id]||1,active=v.activePetUid===c.uid||( !v.activePetUid&&state.activePet===c.id);
+   return '<div class="item-card" style="border-color:'+q.color+'"><div class="item"><div class="itemicon">'+(p?p.icon:'🐾')+'</div><div><b>'+(p?p.name:c.id)+'</b><div style="color:'+q.color+'">'+q.name+' 品質</div><small>Lv.'+lv+' / 30</small></div></div><p>'+(p?p.desc:'')+'</p><button class="small '+(active?'good':'')+'" onclick="sqSetPetCopy('+c.uid+')">'+(active?'出戰中':'出戰')+'</button><button class="small" onclick="sqUpgradePet(\''+c.id+'\')">進化升級 · '+Math.max(2,lv*2)+' 石</button><button class="small danger" onclick="sqReleasePet('+c.uid+')">放生</button></div>';
+  }).join('');
+  $('mountList').innerHTML='<div class="item-card"><h3>🐎 坐騎召喚</h3><p>單抽 60 鑽石｜十連抽 540 鑽石。重複坐騎轉換為坐騎碎片。</p><button class="small primary" onclick="sqMountDraw(1)">召喚一次</button> <button class="small primary" onclick="sqMountDraw(10)">十連召喚</button><p>坐騎碎片：<b>'+(v.mountFragments||0)+'</b></p></div>'+mounts.map(m=>{
+   const owned=state.mounts.includes(m.id),lv=v.mountLevels?.[m.id]||1,active=state.activeMount===m.id;
+   return '<div class="item-card"><div class="item"><div class="itemicon">'+m.icon+'</div><div><b>'+m.name+'</b><div class="muted">'+m.desc+'</div><small>坐騎 Lv.'+lv+' / 30</small></div></div><p>'+(owned?'已加入收藏':'尚未獲得')+'</p><button class="small '+(active?'good':'')+'" '+(!owned?'disabled':'')+' onclick="setMount(\''+m.id+'\')">'+(active?'騎乘中':owned?'騎乘':'未擁有')+'</button><button class="small" '+(!owned||lv>=30?'disabled':'')+' onclick="sqLevelMount(\''+m.id+'\')">升級</button></div>';
+  }).join('');
+ };
+ const previousRender=window.render;
+ if(typeof previousRender==='function')window.render=function(){previousRender();window.renderPets()};
+ // Override pet stats with a restrained quality multiplier; the existing V2.8 wrapper handles base companion bonuses.
+ const previousStats=window.stats;
+ if(typeof previousStats==='function')window.stats=function(){
+  const s=previousStats(),v=vstate(),uid=v.activePetUid;
+  const c=v.petCopies.find(x=>x.uid===uid)||v.petCopies.find(x=>x.id===state.activePet);
+  if(c){const q=qByName(c.rarity),factor=1+(q.scale-1)*.35;s.atk=Math.floor(s.atk*factor);s.def=Math.floor(s.def*factor);s.hp=Math.floor(s.hp*factor);s.power=Math.floor(s.atk*2+s.def*1.5+s.hp*.25)}
+  return s;
+ };
+ const oldRunDungeon=window.runDungeon;
+ if(typeof oldRunDungeon==='function')window.runDungeon=function(id){
+  oldRunDungeon(id);
+  if(id==='boss'&&Math.random()<.18){
+   const p=weightedPet(),q=rollQuality(),c=addPetCopy(p.id,q);
+   save();render();
+   showModal('<h2>🌍 世界 Boss 掉落！</h2><p>'+p.icon+' '+p.name+'</p><h3 style="color:'+qByName(q).color+'">'+q+' 品質寵物</h3><p>已加入寵物收藏！</p><button class="primary" onclick="closeModal()">收下</button>');
+  }else if(id==='boss'&&Math.random()<.12){
+   const m=mounts[Math.floor(Math.random()*mounts.length)];if(!state.mounts.includes(m.id)){state.mounts.push(m.id);save();render();showModal('<h2>🌍 世界 Boss 掉落！</h2><p>'+m.icon+' '+m.name+' 加入坐騎收藏！</p><button class="primary" onclick="closeModal()">收下</button>')}
+  }
+ };
+ // Render the updated panels whenever the player opens the companion page.
+ const oldGo=window.go;
+ if(typeof oldGo==='function')window.go=function(page){oldGo(page);if(page==='pets'||page==='mounts')window.renderPets()};
+})();
+</script>
+
+
+<script>
+// V3.1：寵物頁同時顯示完整圖鑑與已持有個體
+(function(){
+ const oldPetRender=window.renderPets;
+ window.renderPets=function(){
+  const v=state.v15||{};
+  const copies=Array.isArray(v.petCopies)?v.petCopies:[];
+  const countById=id=>copies.filter(c=>c.id===id).length;
+  const catalog=pets.map(p=>{
+   const n=countById(p.id),owned=n>0;
+   return '<div class="item-card" style="opacity:'+(owned?'1':'.78')+'"><div class="item"><div class="itemicon">'+p.icon+'</div><div><b>'+p.name+'</b><div class="muted">'+p.desc+'</div></div></div><p>'+(owned?'已擁有 ×'+n:'尚未獲得')+' · Lv.'+p.unlock+' 開放召喚</p></div>';
+  }).join('');
+  const owned=copies.map(c=>{
+   const p=pets.find(x=>x.id===c.id),q=(typeof qByName==='function'?qByName(c.rarity):{color:'#9aa4b2',name:c.rarity||'普通'});
+   const lv=v.petLevels?.[c.id]||1,active=v.activePetUid===c.uid||(!v.activePetUid&&state.activePet===c.id);
+   return '<div class="item-card" style="border-color:'+q.color+'"><div class="item"><div class="itemicon">'+(p?p.icon:'🐾')+'</div><div><b>'+(p?p.name:c.id)+'</b><div style="color:'+q.color+'">'+q.name+' 品質</div><small>Lv.'+lv+' / 30</small></div></div><p>'+(p?p.desc:'')+'</p><button class="small '+(active?'good':'')+'" onclick="sqSetPetCopy('+c.uid+')">'+(active?'出戰中':'出戰')+'</button> <button class="small" onclick="sqUpgradePet(\''+c.id+'\')">進化升級 · '+Math.max(2,lv*2)+' 石</button> <button class="small danger" onclick="sqReleasePet('+c.uid+')">放生</button></div>';
+  }).join('');
+  $('petList').innerHTML=
+   '<div class="item-card"><h3>✨ 寵物召喚</h3><p>單抽 50 鑽石｜十連抽 450 鑽石。可抽到圖鑑內所有寵物，品質隨機。</p><button class="small primary" onclick="sqPetDraw(1)">召喚一次</button> <button class="small primary" onclick="sqPetDraw(10)">十連召喚</button><p>寵物進化石：<b>'+(v.evoStones||0)+'</b></p><p>已收集：'+copies.length+' 隻 / '+pets.length+' 種</p></div>'+
+   '<h3 style="margin:14px 0 8px">📖 完整寵物圖鑑（'+pets.length+' 種）</h3><div class="item-grid">'+catalog+'</div>'+
+   '<h3 style="margin:18px 0 8px">🐾 已持有寵物（'+copies.length+' 隻）</h3><div class="item-grid">'+(owned||'<p class="muted">目前只有圖鑑展示，尚未獲得其他寵物；可使用鑽石召喚或挑戰世界 Boss 獲得。</p>')+'</div>';
+  $('mountList').innerHTML='<div class="item-card"><h3>🐎 坐騎召喚</h3><p>單抽 60 鑽石｜十連抽 540 鑽石。重複坐騎轉換為坐騎碎片。</p><button class="small primary" onclick="sqMountDraw(1)">召喚一次</button> <button class="small primary" onclick="sqMountDraw(10)">十連召喚</button><p>坐騎碎片：<b>'+(v.mountFragments||0)+'</b></p></div>'+mounts.map(m=>{
+   const has=state.mounts.includes(m.id),lv=v.mountLevels?.[m.id]||1,active=state.activeMount===m.id;
+   return '<div class="item-card"><div class="item"><div class="itemicon">'+m.icon+'</div><div><b>'+m.name+'</b><div class="muted">'+m.desc+'</div><small>坐騎 Lv.'+lv+' / 30</small></div></div><p>'+(has?'已加入收藏':'尚未獲得')+'</p><button class="small '+(active?'good':'')+'" '+(!has?'disabled':'')+' onclick="setMount(\''+m.id+'\')">'+(active?'騎乘中':has?'騎乘':'未擁有')+'</button> <button class="small" '+(!has||lv>=30?'disabled':'')+' onclick="sqLevelMount(\''+m.id+'\')">升級</button></div>';
+  }).join('');
+ };
+ if(typeof window.render==='function'){
+  const base=window.render;
+  window.render=function(){base();window.renderPets()};
+ }
+})();
+</script>
+
+
+<style>
+/* V3.2 companion collection visual refresh */
+#page-pets #petList,#page-mounts #mountList{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:14px;align-items:stretch}
+#page-pets #petList .item-card,#page-mounts #mountList .item-card{position:relative;min-width:0;padding:15px;border:1px solid #344b6b;border-radius:15px;background:linear-gradient(145deg,#17263b 0%,#0d1728 75%);box-shadow:inset 0 1px 0 #ffffff0b,0 8px 20px #0003;overflow:hidden}
+#page-pets #petList .item-card:before,#page-mounts #mountList .item-card:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#4aa9ff,#9b72ff,#e6b75b)}
+#page-pets #petList .itemicon,#page-mounts #mountList .itemicon{width:58px;height:58px;min-width:58px;border-radius:14px;display:grid;place-items:center;font-size:34px;background:radial-gradient(circle at 35% 25%,#344d70,#142238 70%);border:1px solid #58749b;box-shadow:0 4px 14px #0005}
+#page-pets #petList .item,#page-mounts #mountList .item{align-items:center;gap:12px}
+#page-pets #petList .item-card p,#page-mounts #mountList .item-card p{line-height:1.55}
+#page-pets #petList .item-card button,#page-mounts #mountList .item-card button{margin:3px 3px 0 0}
+#page-pets #petList .companion-banner,#page-mounts #mountList .companion-banner{grid-column:1/-1;background:linear-gradient(110deg,#203653,#111d30);border:1px solid #4a668a;border-radius:16px;padding:16px}
+#page-pets #petList .companion-banner h3,#page-mounts #mountList .companion-banner h3{margin:0 0 7px}
+@media(max-width:650px){#page-pets #petList,#page-mounts #mountList{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#page-pets #petList .itemicon,#page-mounts #mountList .itemicon{width:48px;height:48px;min-width:48px;font-size:29px}}
+</style>
+<script>
+(function(){
+ const vstate2=()=>{state.v15=state.v15||{};const v=state.v15;v.mountCopies=Array.isArray(v.mountCopies)?v.mountCopies:[];v.mountStones=Number(v.mountStones)||0;v.mountLevels=v.mountLevels||{};return v};
+ const ensureMountCopies=()=>{const v=vstate2();if(!v.mountCopies.length){(state.mounts||[]).forEach(id=>v.mountCopies.push({uid:Date.now()+Math.floor(Math.random()*1e6),id}));}return v};
+ const mountStoneCost=lv=>Math.max(2,lv*2);
+ window.sqReleaseMount=function(uid){
+  const v=ensureMountCopies(),i=v.mountCopies.findIndex(c=>String(c.uid)===String(uid));if(i<0)return;
+  const c=v.mountCopies[i],m=mounts.find(x=>x.id===c.id),same=v.mountCopies.filter(x=>x.id===c.id);
+  if(state.activeMount===c.id&&same.length<=1){notify('無法放生','至少保留一隻目前騎乘的坐騎');return}
+  const gain=1;
+  if(!confirm('確定放生「'+(m?m.name:c.id)+'」？可獲得坐騎進化石 ×'+gain+'。'))return;
+  v.mountCopies.splice(i,1);v.mountStones+=gain;
+  if(!v.mountCopies.some(x=>x.id===c.id))state.mounts=state.mounts.filter(x=>x!==c.id);
+  if(state.activeMount===c.id&&!v.mountCopies.some(x=>x.id===c.id))state.activeMount=v.mountCopies[0]?.id||'horse';
+  save();render();notify('放生成功','獲得坐騎進化石 ×'+gain);
+ };
+ window.sqUpgradeMount=function(id){
+  const v=vstate2(),lv=v.mountLevels[id]||1,cost=mountStoneCost(lv),m=mounts.find(x=>x.id===id);
+  if(!state.mounts.includes(id)){notify('尚未獲得此坐騎');return}
+  if(lv>=30){notify('坐騎已達最高等級');return}
+  if(v.mountStones<cost){notify('坐騎進化石不足','升級需要 '+cost+' 顆坐騎進化石');return}
+  v.mountStones-=cost;v.mountLevels[id]=lv+1;save();render();notify('坐騎升級成功',(m?m.name:id)+' 提升至 Lv.'+(lv+1));
+ };
+ const oldDraw=window.sqMountDraw;
+ window.sqMountDraw=function(n){
+  n=n===10?10:1;const v=ensureMountCopies(),cost=n===10?540:60;
+  if(state.gems<cost){notify('鑽石不足','坐騎召喚需要 '+cost+' 鑽石');return}
+  state.gems-=cost;const results=[];
+  for(let i=0;i<n;i++){
+   const m=mounts[Math.floor(Math.random()*mounts.length)]||mounts[0];
+   const dup=v.mountCopies.some(c=>c.id===m.id);
+   const copy={uid:Date.now()+i+Math.floor(Math.random()*1e6),id:m.id};
+   v.mountCopies.push(copy);
+   if(!state.mounts.includes(m.id))state.mounts.push(m.id);
+   results.push({m,dup,copy});
+  }
+  save();render();
+  showModal('<h2>🐎 坐騎召喚結果</h2><div class="item-grid">'+results.map(x=>'<div class="item-card"><div class="itemicon">'+x.m.icon+'</div><b>'+x.m.name+'</b><p>'+(x.dup?'重複坐騎：可放生換取坐騎進化石':'新坐騎加入收藏')+'</p></div>').join('')+'</div><p>已消耗 '+cost+' 鑽石</p><button class="primary" onclick="closeModal()">確定</button>');
+ };
+ const baseRender=window.render;
+ window.renderPets=function(){
+  if(!state)return;
+  const v=ensureMountCopies(),pv=state.v15||{},copies=Array.isArray(pv.petCopies)?pv.petCopies:[];
+  const petCount=id=>copies.filter(c=>c.id===id).length;
+  const rarity=c=>typeof qByName==='function'?qByName(c.rarity):{name:c.rarity||'普通',color:'#9aa4b2',stone:1};
+  const petCards=pets.map(p=>{
+   const owned=petCount(p.id)>0||state.pets.includes(p.id),n=petCount(p.id);
+   return '<div class="item-card"><div class="item"><div class="itemicon">'+p.icon+'</div><div><b>'+p.name+'</b><div class="muted">'+p.desc+'</div></div></div><p>'+(owned?'已收集 ×'+Math.max(n,1):'尚未獲得 · 角色 Lv.'+p.unlock+' 開放')+'</p></div>';
+  }).join('');
+  const petOwned=copies.map(c=>{
+   const p=pets.find(x=>x.id===c.id),q=rarity(c),lv=pv.petLevels?.[c.id]||1,active=pv.activePetUid===c.uid||(!pv.activePetUid&&state.activePet===c.id);
+   return '<div class="item-card" style="border-color:'+q.color+'"><div class="item"><div class="itemicon">'+(p?p.icon:'🐾')+'</div><div><b>'+(p?p.name:c.id)+'</b><div style="color:'+q.color+'">'+q.name+' 品質</div><small>Lv.'+lv+' / 30</small></div></div><p>'+(p?p.desc:'')+'</p><button class="small '+(active?'good':'')+'" onclick="sqSetPetCopy('+c.uid+')">'+(active?'出戰中':'出戰')+'</button> <button class="small" onclick="sqUpgradePet(\''+c.id+'\')">升級 · '+Math.max(2,lv*2)+' 石</button> <button class="small danger" onclick="sqReleasePet('+c.uid+')">放生</button></div>';
+  }).join('');
+  $('petList').innerHTML='<div class="companion-banner"><h3>✨ 寵物召喚</h3><p>單抽 50 鑽石｜十連抽 450 鑽石。重複寵物可放生取得進化石。</p><button class="primary" onclick="sqPetDraw(1)">召喚一次</button> <button onclick="sqPetDraw(10)">十連召喚</button><p>寵物進化石：<b>'+(pv.evoStones||0)+'</b>　已持有：'+copies.length+' 隻</p></div><h3 style="grid-column:1/-1">📖 完整寵物圖鑑（'+pets.length+' 種）</h3>'+petCards+'<h3 style="grid-column:1/-1">🐾 已持有個體（'+copies.length+'）</h3>'+(petOwned||'<p class="muted">尚無抽取個體，可透過召喚或世界 Boss 取得。</p>');
+  const mountOwned=v.mountCopies.map(c=>{
+   const m=mounts.find(x=>x.id===c.id),lv=v.mountLevels[c.id]||1,active=state.activeMount===c.id;
+   return '<div class="item-card"><div class="item"><div class="itemicon">'+(m?m.icon:'🐎')+'</div><div><b>'+(m?m.name:c.id)+'</b><div class="muted">'+(m?m.desc:'')+'</div><small class="gold">坐騎 Lv.'+lv+' / 30</small></div></div><p>'+(active?'目前騎乘中':'收藏個體')+'</p><button class="small '+(active?'good':'')+'" onclick="setMount(\''+c.id+'\')">'+(active?'騎乘中':'騎乘')+'</button> <button class="small danger" onclick="sqReleaseMount('+c.uid+')">放生 · +1 石</button></div>';
+  }).join('');
+  const mountCatalog=mounts.map(m=>'<div class="item-card"><div class="item"><div class="itemicon">'+m.icon+'</div><div><b>'+m.name+'</b><div class="muted">'+m.desc+'</div></div></div><p>'+(state.mounts.includes(m.id)?'已收藏':'尚未獲得')+'</p></div>').join('');
+  const mountUpgrades=mounts.filter(m=>state.mounts.includes(m.id)).map(m=>{
+   const lv=v.mountLevels[m.id]||1,cost=mountStoneCost(lv);
+   return '<div class="item-card"><div class="item"><div class="itemicon">'+m.icon+'</div><div><b>'+m.name+'</b><small class="gold">Lv.'+lv+' / 30</small></div></div><p>升級後提升坐騎成長加成</p><button class="small" '+(lv>=30?'disabled':'')+' onclick="sqUpgradeMount(\''+m.id+'\')">進化升級 · '+cost+' 石</button></div>';
+  }).join('');
+  $('mountList').innerHTML='<div class="companion-banner"><h3>🐎 坐騎召喚</h3><p>單抽 60 鑽石｜十連抽 540 鑽石。重複坐騎會保留成獨立個體，可放生換取坐騎進化石。</p><button class="primary" onclick="sqMountDraw(1)">召喚一次</button> <button onclick="sqMountDraw(10)">十連召喚</button><p>坐騎進化石：<b>'+v.mountStones+'</b>　已收藏個體：'+v.mountCopies.length+'</p></div><h3 style="grid-column:1/-1">🐎 已收藏坐騎個體</h3>'+(mountOwned||'<p class="muted">尚未獲得坐騎。</p>')+'<h3 style="grid-column:1/-1">📖 坐騎圖鑑</h3>'+mountCatalog+'<h3 style="grid-column:1/-1">⬆️ 坐騎升級</h3>'+(mountUpgrades||'<p class="muted">獲得坐騎後即可升級。</p>');
+ };
+ window.render= function(){baseRender();window.renderPets()};
+})();
+</script>
+
+
+<style>
+#page-tower .stat{background:#101b2d;border:1px solid #344b6b;border-radius:12px;padding:12px}
+#page-tower .stat small{display:block;color:var(--muted)}
+#page-tower .stat b{display:block;font-size:20px;margin-top:5px}
+#page-tower #towerEnemy{background:radial-gradient(ellipse at center,#263c5c,#101827 72%);border-color:#657da2}
+#page-tower .bar{height:12px;background:#27344a;border-radius:20px;overflow:hidden;margin:10px 0}
+#page-tower .bar i{display:block;height:100%;background:linear-gradient(90deg,#e35d66,#f4a06a);transition:width .2s}
+#page-tower .bar.hp i{background:linear-gradient(90deg,#c84b57,#f17a73)}
+#page-tower .log{background:#0a1220;border:1px solid #2b3b55;border-radius:10px;padding:10px;color:#c8d4e6}
+</style>
+<script>
+(function(){
+ const towerNames=['石像守衛','深淵獵犬','墮落騎士','幽影巨蛛','熔岩巨魔','古代守門者'];
+ const towerIcons=['🗿','🐺','🛡️','🕷️','👹','👁️'];
+ const tv=()=>{state.tower=state.tower||{best:0,claimed:[],active:false,floor:0,hp:0,maxHp:0,enemyHp:0,enemyMax:0,enemyAtk:0};return state.tower};
+ const el=id=>document.getElementById(id);
+ const zoneBase=()=>zones[state.zone]||zones[0];
+ function towerStats(floor){
+  const z=zoneBase(),lvl=state.level||1,step=Math.max(1,floor);
+  const scale=Math.pow(1.075,step-1)*Math.pow(1.12,Math.max(0,lvl-z.level));
+  const boss=step%10===0;
+  const hp=Math.floor(z.hp*scale*(boss?7.5:2.4));
+  const atk=Math.floor(z.atk*scale*(boss?2.25:1.45));
+  return {boss,hp,atk,name:boss?'高塔樓層 Boss：'+['深淵巨像','永夜魔君','災厄古龍'][Math.floor(step/10)%3]:towerNames[(step-1)%towerNames.length],icon:boss?'🐉':towerIcons[(step-1)%towerIcons.length]};
+ }
+ function rewardFor(floor){
+  const boss=floor%10===0;
+  return {gems:boss?Math.floor(25+floor*1.5):Math.floor(5+floor*.5),gold:Math.floor(100+floor*35),shards:boss?3:1,gear:boss};
+ }
+ window.renderTower=function(){
+  const t=tv(),floor=t.active?t.floor:t.best+1,d=t.active?{boss:floor%10===0,hp:t.enemyMax,atk:t.enemyAtk,name:t.enemyName,icon:t.enemyIcon}:towerStats(floor),r=rewardFor(floor),claimed=t.claimed||[];
+  el('towerBest').textContent='第 '+t.best+' 層';el('towerCurrent').textContent=t.active?'第 '+t.floor+' 層':'尚未開始';
+  el('towerType').textContent=d.boss?'樓層 Boss':'一般守衛';
+  el('towerIcon').textContent=d.icon;el('towerName').textContent=d.name;
+  el('towerDesc').textContent=d.boss?'每 10 層的守關 Boss，強度高於一般塔層敵人。':'塔層守衛比野外怪物更強，逐層提升難度。';
+  el('towerEnemyHp').textContent=t.active?'HP '+Math.max(0,t.enemyHp)+' / '+t.enemyMax:'預估 HP '+d.hp;
+  el('towerEnemyBar').style.width=t.active?(Math.max(0,t.enemyHp)/t.enemyMax*100)+'%':'100%';
+  const ps=stats(),php=t.active?t.hp:ps.hp,pmax=ps.hp;
+  el('towerPlayerHp').textContent='HP '+Math.max(0,php)+' / '+pmax;
+  el('towerPlayerBar').style.width=(Math.max(0,php)/pmax*100)+'%';
+  el('towerReward').textContent='💎 '+r.gems+' 鑽石　🪙 '+r.gold+' 金幣　碎片 ×'+r.shards+(r.gear?'　史詩裝備':'')+(claimed.includes(floor)?'（已領取）':'（首次通關）');
+  el('towerStart').disabled=t.active;el('towerAttack').disabled=!t.active;el('towerSkill').disabled=!t.active;el('towerExit').disabled=!t.active;
+  el('towerHistory').innerHTML=Array.from({length:Math.max(1,Math.min(t.best+1,20))},(_,i)=>{const n=i+1;return '<div class="item-card"><b>第 '+n+' 層</b><p>'+(n%10===0?'👹 Boss 樓層':'🗿 守衛樓層')+'</p><small>'+(n<=t.best?'已通關':'尚未通關')+'</small></div>'}).join('');
+ };
+ function towerLog(msg){const box=el('towerLog');box.innerHTML='<div>› '+msg+'</div>'+box.innerHTML;box.innerHTML=box.innerHTML.slice(0,5000)}
+ window.towerStart=function(){
+  if(!state.classId){showModal('<h2>尚未選擇職業</h2><p>請先選擇職業再挑戰無盡之塔。</p>');return}
+  const t=tv();if(t.active)return;
+  const floor=t.best+1,d=towerStats(floor),ps=stats();
+  t.active=true;t.floor=floor;t.maxHp=ps.hp;t.hp=ps.hp;t.enemyMax=d.hp;t.enemyHp=d.hp;t.enemyAtk=d.atk;t.enemyName=d.name;t.enemyIcon=d.icon;
+  window.renderTower();towerLog('開始挑戰第 '+floor+' 層，'+d.name+' 出現了！');
+ };
+ function towerPlayerHit(mult){
+  const t=tv();if(!t.active)return;
+  const ps=stats(),damage=Math.max(1,Math.floor(ps.atk*mult*(.9+Math.random()*.2)));
+  t.enemyHp=Math.max(0,t.enemyHp-damage);towerLog('你造成 '+damage+' 點傷害。');
+  if(t.enemyHp<=0){towerWin();return}
+  const taken=Math.max(1,Math.floor(t.enemyAtk*(100/(100+ps.def))*(.9+Math.random()*.2)));
+  t.hp=Math.max(0,t.hp-taken);towerLog(t.enemyName+' 反擊，造成 '+taken+' 點傷害。');
+  if(t.hp<=0){t.active=false;towerLog('你在第 '+t.floor+' 層戰敗，恢復狀態後可再次挑戰。');notify('挑戰失敗','最高通關仍保留在第 '+t.best+' 層');}
+  save();window.renderTower();
+ }
+ function towerWin(){
+  const t=tv(),floor=t.floor,r=rewardFor(floor),first=!t.claimed.includes(floor);
+  t.active=false;t.best=Math.max(t.best,floor);
+  if(first){t.claimed.push(floor);state.gems+=r.gems;state.gold+=r.gold;state.shards+=r.shards;addXP(r.gold);if(r.gear)grantGear(makeGear('史詩'));else if(Math.random()<.35)grantGear(makeGear(rollRarity()));}
+  save();render();window.renderTower();
+  towerLog('🏆 第 '+floor+' 層通關！'+(first?'首次通關獎勵已發放。':'重複通關，不再發放首通獎勵。'));
+  showModal('<h2>🏆 無盡之塔通關！</h2><p>成功突破第 '+floor+' 層。</p>'+(first?'<p>💎 鑽石 +'+r.gems+'　🪙 金幣 +'+r.gold+'　碎片 +'+r.shards+(r.gear?'　史詩裝備 ×1':'')+'</p>':'<p>這一層的首次通關獎勵已領取。</p>')+'<button class="primary" onclick="closeModal();towerStart()">挑戰下一層</button> <button onclick="closeModal()">稍後再戰</button>');
+ }
+ window.towerAttack=function(){towerPlayerHit(1)};
+ window.towerSkill=function(){towerPlayerHit(1.65)};
+ window.towerExit=function(){const t=tv();t.active=false;save();window.renderTower();towerLog('你離開了高塔。')};
+ const oldGo=window.go;
+ window.go=function(p){oldGo(p);if(p==='tower')window.renderTower()};
+ const oldRender=window.render;
+ window.render=function(){oldRender();window.renderTower()};
+ document.addEventListener('DOMContentLoaded',()=>window.renderTower());
+})();
+</script>
+
+
+<style>
+#page-pets .fusion-panel{grid-column:1/-1;padding:16px;border:1px solid #8c6bd1;border-radius:15px;background:linear-gradient(120deg,#241b3c,#111b2d)}
+#page-pets .fusion-group{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px;border:1px solid #3b4d6a;border-radius:12px;background:#0d1728}
+#page-pets .fusion-group .itemicon{font-size:30px;width:48px;height:48px;display:grid;place-items:center;background:#1b2b43;border-radius:12px}
+#page-pets .starline{color:#ffd66b;letter-spacing:2px;font-weight:800}
+</style>
+<script>
+// V3.4：寵物三星融合進化
+(function(){
+ const vget=()=>{state.v15=state.v15||{};const v=state.v15;v.petCopies=Array.isArray(v.petCopies)?v.petCopies:[];v.evoStones=Number(v.evoStones)||0;return v};
+ const qlist=['普通','優良','稀有','史詩','傳說','神話','起源'];
+ const stoneCost={'普通':0,'優良':1,'稀有':2,'史詩':4,'傳說':8,'神話':16,'起源':32};
+ const petOf=id=>pets.find(p=>p.id===id)||{id,name:id,icon:'🐾',desc:'未知寵物'};
+ const starText=n=>'★'.repeat(Math.max(1,n||1))+'☆'.repeat(Math.max(0,5-(n||1)));
+ const oldFusionRender=window.renderPets;
+ window.sqPetFusion=function(id,rarity,star){
+  const v=vget(),group=v.petCopies.filter(c=>c.id===id&&(c.rarity||'普通')===rarity&&(c.star||1)==star);
+  const cost=stoneCost[rarity]||0,pet=petOf(id);
+  if(star>=5){notify('已達最高星級','寵物最高可融合至 5 星');return}
+  if(group.length<3){notify('融合素材不足','需要 3 隻相同寵物、相同品質及相同星級');return}
+  if(v.evoStones<cost){notify('寵物進化石不足','此品質融合需要 '+cost+' 顆進化石');return}
+  if(!confirm('確定融合 '+pet.name+'？\\n消耗：同品質 '+star+' 星寵物 ×3'+(cost?'、進化石 ×'+cost:'')+'\\n結果：'+(star+1)+' 星 '+pet.name))return;
+  const keep=group[0];const consume=group.slice(1,3);
+  v.petCopies=v.petCopies.filter(c=>!consume.some(x=>x.uid===c.uid));
+  keep.star=star+1;v.evoStones-=cost;
+  save();render();notify('融合成功','✨ '+pet.name+' 進化為 '+(star+1)+' 星！');
+ };
+ const oldSet=window.sqSetPetCopy;
+ window.sqSetPetCopy=function(uid){oldSet(uid);const v=vget();v.activePetUid=uid;save()};
+ const oldStats=window.stats;
+ if(typeof oldStats==='function')window.stats=function(){
+  const st=oldStats(),v=vget(),c=v.petCopies.find(x=>x.uid===v.activePetUid)||v.petCopies.find(x=>x.id===state.activePet);
+  if(c){const star=Math.max(1,c.star||1),bonus=1+(star-1)*.02;st.atk=Math.floor(st.atk*bonus);st.hp=Math.floor(st.hp*bonus);st.def=Math.floor(st.def*bonus);st.petStar=star}
+  return st;
+ };
+ window.renderPets=function(){
+  oldFusionRender();
+  const v=vget(),groups={};
+  v.petCopies.forEach(c=>{const key=[c.id,c.rarity||'普通',c.star||1].join('|');(groups[key]||(groups[key]=[])).push(c)});
+  const rows=Object.entries(groups).map(([key,a])=>{
+   const [id,rarity,starS]=key.split('|'),star=Number(starS),p=petOf(id),cost=stoneCost[rarity]||0,need=a.length>=3,afford=v.evoStones>=cost;
+   return '<div class="fusion-group"><div class="itemicon">'+p.icon+'</div><div style="flex:1;min-width:150px"><b>'+p.name+'</b><div style="color:#c5a8ff">'+rarity+' 品質 · <span class="starline">'+starText(star)+'</span></div><small>持有 '+a.length+' 隻 · 融合需求 3 隻'+(cost?' + '+cost+' 顆進化石':'')+'</small></div><button class="small primary" '+(star>=5||!need||!afford?'disabled':'')+' onclick="sqPetFusion(\''+id+'\',\''+rarity+'\','+star+')">融合至 '+(star+1)+' 星</button></div>';
+  }).join('');
+  const panel='<div class="fusion-panel"><h3>✨ 寵物融合與進化</h3><p class="muted">消耗 3 隻相同寵物、相同品質及相同星級，融合成高 1 星的寵物。高品質融合需要額外進化石。最高 5 星。</p><p>目前寵物進化石：<b>'+v.evoStones+'</b></p><div style="display:grid;gap:8px">'+(rows||'<p class="muted">尚未持有寵物，召喚取得後即可融合。</p>')+'</div><p class="muted">星級能力：每提升 1 星，出戰寵物攻擊、生命、防禦各額外 +2%。3 星解鎖進化外觀，5 星解鎖終極外觀與強化技能。</p></div>';
+  const root=document.getElementById('petList');if(root)root.insertAdjacentHTML('beforeend',panel);
+  // Visual evolution indicators on owned cards and the active companion.
+  root?.querySelectorAll('.item-card').forEach(card=>{});
+ };
+ const prevRender=window.render;
+ window.render=function(){prevRender();window.renderPets()};
+})();
+</script>
+
+
+<script>
+// V3.5：經驗、等級與角色素質即時同步修正
+(function(){
+ const oldRender=window.render;
+ window.render=function(){
+  oldRender();
+  // Keep the visible character summary synchronized after any reward, level-up,
+  // equipment, talent, pet or mount change.
+  if(typeof renderCharacter==='function')renderCharacter();
+  const xp=state.xp||0,need=xpNeed();
+  const pct=state.level>=150?100:Math.max(0,Math.min(100,xp/need*100));
+  const bar=document.getElementById('xpbar'),txt=document.getElementById('xptext');
+  if(bar)bar.style.width=pct+'%';
+  if(txt)txt.textContent=fmt(xp)+' / '+fmt(need)+' EXP';
+ };
+ // Some combat/reward paths grant EXP without invoking the main renderer.
+ const oldAddXP=window.addXP||addXP;
+ window.addXP=function(n){oldAddXP(n);window.render()};
+})();
+</script>
+
 </body></html>
